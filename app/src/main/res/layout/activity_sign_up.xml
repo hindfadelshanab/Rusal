@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:overScrollMode="never"
-    android:padding="@dimen/_24sdp"
+    android:padding="@dimen/_16sdp"
     android:scrollbars="none"
     >
 
@@ -15,14 +15,15 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        android:layout_gravity="end"
 
         >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:text="Create New Account"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:text="تسجيل حساب جديد"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/_18sdp"
             android:textStyle="bold" />
@@ -31,7 +32,7 @@
             android:id="@+id/layoutImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp">
+            android:layout_marginTop="@dimen/_16sdp">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/imageProfile"
@@ -102,9 +103,56 @@
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textSize="@dimen/_13sdp"
+            android:textAlignment="textEnd"
 
             />
 
+        <Spinner
+            android:id="@+id/clubSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:entries="@array/clubs"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:padding="@dimen/_8sdp"
+
+
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/user"
+            android:textSize="@dimen/_18ssp"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/_16sdp"
+
+            />
+
+        <RadioGroup
+            android:id="@+id/radio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginEnd="@dimen/_16sdp"
+
+            >
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/student"
+                android:paddingEnd="@dimen/_16sdp"
+
+                />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/teacher"
+
+                />
+        </RadioGroup>
 
 
 
@@ -150,31 +198,7 @@
 
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:gravity="center"
 
-
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gmail"
-                android:layout_marginEnd="@dimen/_16sdp"
-
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/facebook"
-
-                />
-
-
-        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

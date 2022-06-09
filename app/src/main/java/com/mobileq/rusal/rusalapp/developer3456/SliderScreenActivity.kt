@@ -17,11 +17,14 @@ import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.widget.ViewPager2
 import com.mobileq.rusal.rusalapp.developer3456.adapter.IntroSliderAdapter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.ActivitySliderScreenBinding
+import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
+import com.mobileq.rusal.rusalapp.developer3456.utilites.PreferenceManager
 
 class SliderScreenActivity : AppCompatActivity() {
 
 
     private lateinit var binding : ActivitySliderScreenBinding
+    private var preferenceManager: PreferenceManager? = null
 
 
     private lateinit var introSliderAdapter :IntroSliderAdapter
@@ -30,6 +33,20 @@ class SliderScreenActivity : AppCompatActivity() {
         binding = ActivitySliderScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        preferenceManager = PreferenceManager(applicationContext)
+        if (preferenceManager!!.getBoolean(Constants.KEY_IS_SIGNED_IN) && preferenceManager!!.getBoolean(
+                Constants.KEY_IS_Student)) {
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else if (preferenceManager!!.getBoolean(Constants.KEY_IS_SIGNED_IN) && preferenceManager!!.getBoolean(
+                Constants.KEY_IS_Teacher)) {
+            val intent = Intent(applicationContext, MainActivity2::class.java)
+            startActivity(intent)
+            finish()
+
+        }
         introSliderAdapter= IntroSliderAdapter(
             listOf(
                 IntroSlide(

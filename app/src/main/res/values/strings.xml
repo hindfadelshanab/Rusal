@@ -1,17 +1,44 @@
 <resources>
     <string name="app_name">RusalApp</string>
     <string name="sign_in">تسجيل الدخول</string>
-    <string name="password">Password</string>
+    <string name="password">كلمة المرور</string>
     <string name="start">Start</string>
     <string name="next">Next</string>
     <string name="skip">Skip</string>
     <string name="forget_password">هل نسيت كلمة المرور</string>
     <string name="add_image">Add Image</string>
-    <string name="name">Name</string>
+    <string name="name">اسم المستخدم</string>
 
-    <string name="email">Email</string>
+    <string name="email">البريد الالكتروني</string>
     <string name="create_new_account">Create New Account</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="sign_up">Sign Up</string>
+    <string name="sign_up">تسجيل</string>
     <string name="type_a_message">Type a message</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">الرئيسية</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="student">طالب</string>
+    <string name="user">نوع الحساب:</string>
+    <string name="teacher">معلم</string>
+    <string name="menu_share_talent">شاركنا موهبتك</string>
+    <string name="menu_contact_us">تواصل معنا</string>
+    <string name="share_app">شارك التطبيق</string>
+
+    <string-array name="clubs">
+
+        <item>اختر نادي</item>
+        <item>نادي الاعلام</item>
+        <item>نادي الوسائط</item>
+        <item>نادي الفنون</item>
+    </string-array>
 </resources>

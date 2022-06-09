@@ -3,6 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.mobileq.rusal.rusalapp.developer3456">
 
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -14,8 +19,35 @@
         android:theme="@style/Theme.RusalApp"
         tools:targetApi="31">
         <activity
-            android:name=".SliderScreenActivity"
+            android:name=".PostDetailsActivity"
             android:exported="false" />
+        <activity
+            android:name=".GuestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PublicPostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Frgmant.IndividualismChatActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" /> <!-- <activity -->
+        <!-- android:name=".MainDoctorActivity" -->
+        <!-- android:exported="false" /> -->
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Frgmant.MakeChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.RusalApp.NoActionBar" />
+        <activity
+            android:name=".SliderScreenActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false" />
@@ -23,20 +55,22 @@
             android:name=".SignInActivity"
             android:exported="false" />
         <activity
+            android:name=".ForgetPasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreenActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"
+            android:theme="@style/Theme.RusalApp.NoActionBar" />
     </application>
 
 </manifest>

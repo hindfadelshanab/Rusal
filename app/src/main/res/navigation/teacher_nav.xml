@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/teacher_nav"
+    app:startDestination="@id/nav_home2">
+
+    <fragment
+        android:id="@+id/nav_home2"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.teacherFragment.HomeTeacherFragment"
+        android:label="الرئيسية"
+        tools:layout="@layout/fragment_home_teacher" />
+    <fragment
+        android:id="@+id/nav_student_talent"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.teacherFragment.StudentTalentFragment"
+        android:label="المواهب"
+        tools:layout="@layout/fragment_student_talent" />
+    <fragment
+        android:id="@+id/nav_public"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.teacherFragment.PublicFragment"
+        android:label="PublicFragment" />
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.Frgmant.ContackUsFragment"
+        android:label="تواصل معنا"
+        tools:layout="@layout/fragment_contack_us" />
+    <fragment
+        android:id="@+id/nav_support"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.Frgmant.SupportUsFragment"
+        android:label="ادعم رسل"
+        tools:layout="@layout/fragment_support_us" />
+
+</navigation>

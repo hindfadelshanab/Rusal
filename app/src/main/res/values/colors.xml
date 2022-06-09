@@ -10,5 +10,6 @@
 
     <color name="mainColor">#0072BC</color>
     <color name="input_background">#ECECEC</color>
+    <color name="received_message_background">#090D16</color>
 
 </resources>

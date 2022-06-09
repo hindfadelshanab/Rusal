@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/_12sdp"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="@dimen/_12sdp"
+    tools:context=".teacherFragment.StudentTalentFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginEnd="@dimen/_8sdp"
+
+            android:layout_marginStart="@dimen/_8sdp"
+            >
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/im_StudentTalent"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:background="@drawable/background_image"
+                android:scaleType="centerCrop"
+                app:riv_oval="true" />
+
+            <TextView
+                android:id="@+id/txt_StudentNameTalent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:padding="@dimen/_8sdp"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                tools:text="Hind Abushanab" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_StudentDecTalent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:textSize="@dimen/_18ssp"
+            tools:text="here my talent"
+
+
+            />
+    </LinearLayout>
+
+
+</androidx.cardview.widget.CardView>

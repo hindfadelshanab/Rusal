@@ -119,12 +119,14 @@
 
 
         <TextView
+            android:id="@+id/signAsGuset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="الدخول كضيف"
             android:gravity="center"
             android:textColor="@color/mainColor"
             android:textSize="@dimen/_20ssp"
+            android:padding="@dimen/_8sdp"
 
             android:layout_marginTop="@dimen/_16sdp"
 
@@ -142,31 +144,7 @@
 
             />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
-            android:gravity="center"
 
-
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/gmail"
-                android:layout_marginEnd="@dimen/_16sdp"
-
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/facebook"
-
-                />
-
-
-        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

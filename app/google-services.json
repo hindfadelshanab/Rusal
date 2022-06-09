@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "873250356649",
+    "project_id": "rusalapp",
+    "storage_bucket": "rusalapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:873250356649:android:ce3edb50367101eb5558b8",
+        "android_client_info": {
+          "package_name": "com.mobileq.rusal.rusalapp.developer3456"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "873250356649-p33j6kkipreqj4jeakhmc15oko9hhqld.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCdq9SgHEEufYonlasf_9xklxvncHdjoKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "873250356649-p33j6kkipreqj4jeakhmc15oko9hhqld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

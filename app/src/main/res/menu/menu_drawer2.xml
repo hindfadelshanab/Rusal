@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home2"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_student_talent"
+            android:icon="@drawable/talent"
+            android:title="المواهب"
+
+            />
+
+        <item
+            android:id="@+id/nav_public"
+            android:orderInCategory="100"
+            android:title="Public"
+            android:icon="@drawable/ic_baseline_public_24"
+            />
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/contactus"
+            android:title="تواصل معنا"
+
+            />
+        <item
+            android:id="@+id/nav_support"
+            android:icon="@drawable/ic_baseline_star_rate_24"
+            android:title="ادعم رسل"
+
+            />
+
+    </group>
+</menu>
