@@ -1,32 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_marginStart="@dimen/_16sdp"
+    android:layout_marginEnd="@dimen/_16sdp"
+    android:layout_marginTop="@dimen/_4sdp"
+    app:cardElevation="4dp"
     xmlns:tools="http://schemas.android.com/tools">
+
+
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:padding="@dimen/_4sdp"
+
+        >
+
+        <TextView
+            android:id="@+id/txt_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="@dimen/_4sdp"
+
+            android:layout_gravity="end"
+
+            android:textColor="@color/black"
+            android:gravity="end"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textSize="@dimen/_16ssp"
+            android:textAlignment="viewEnd"
+            tools:text="هند" />
+
+        <TextView
+            android:id="@+id/txt_userEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_gravity="end"
+
+            android:gravity="end"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textAlignment="viewEnd"
+            tools:text="hind@gmail.com" />
+    </LinearLayout>
 
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/img_user"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_width="@dimen/_35sdp"
+        android:layout_height="@dimen/_35sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+
         android:background="@drawable/background_image"
         android:scaleType="centerCrop"
         app:riv_oval="true" />
-
-    <TextView
-        android:id="@+id/txt_userName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_4sdp"
-        android:padding="@dimen/_4sdp"
-        android:layout_gravity="center"
-        android:textColor="@color/black"
-        android:layout_marginEnd="@dimen/_12sdp"
-        android:textSize="@dimen/_16ssp"
-        tools:text="Hind Abushanab" />
-
 </LinearLayout>
+    </androidx.cardview.widget.CardView>

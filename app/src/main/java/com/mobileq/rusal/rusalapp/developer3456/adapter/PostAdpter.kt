@@ -2,15 +2,14 @@ package com.mobileq.rusal.rusalapp.developer3456.adapter
 
 
 import Post
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -57,10 +56,12 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
                 })
 
         }
-        holder.itemView.setOnClickListener { view -> postListener.onPostClicked(itemsViewModel) }
+        holder.imageView.setOnClickListener { view -> postListener.onPostClicked(itemsViewModel)
+
+        }
 
         holder.textViewDec.text = itemsViewModel.postDec
-        holder.textViewNumberOfLick.text = itemsViewModel.numberOfNum.toString()
+        holder.textViewNumberOfLick.text = "${itemsViewModel.numberOfNum.toString()} اعجاب"
         Picasso.get()
             .load(itemsViewModel.teacherImage)
             .into(holder.imageViewUserProfile)
@@ -85,6 +86,20 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
             }else{
                 holder.likeImage.setImageResource(R.drawable.ic_heart)
             }
+
+        db.collection("Post").document(itemsViewModel.postId.toString()).collection("Comment").get().addOnSuccessListener { docs ->
+
+            Log.e("number of comment" , "size : ${docs.size()}");
+            holder.textViewNumberOfComment.text = "${docs.size()} تعليق"
+        }
+        holder.imageShare.setOnClickListener {
+            val intent= Intent()
+            intent.action=Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT,itemsViewModel.postDec)
+            intent.type="text/plain"
+            context?.startActivity(Intent.createChooser(intent,"Share To:"))
+        }
+
 
 
 
@@ -114,6 +129,7 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
             post.teacherName =itemsViewModel.teacherName
             post.likeBy =   itemsViewModel.likeBy
             post.isLike =true
+            post.numberOfComment = itemsViewModel.numberOfComment
             post.numberOfNum = itemsViewModel.likeBy!!.size
             updatePost(itemsViewModel.postId.toString() ,post )
         }
@@ -134,6 +150,8 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
         val likeImage: ImageView =itemView.findViewById<ImageView>(R.id.img_like)
         var progressBar :ProgressBar = itemView.findViewById(R.id.progressBar)
         val textViewClubName: TextView = itemView.findViewById(R.id.txt_post_club_name)
+        val textViewNumberOfComment: TextView = itemView.findViewById(R.id.txt_numberOfComment)
+        val imageShare: LinearLayout = itemView.findViewById(R.id.layoyt_share)
 
     }
 

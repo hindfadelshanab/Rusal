@@ -11,6 +11,7 @@ import android.net.Uri
 import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -72,21 +74,33 @@ class HomeFragment : Fragment() ,PostListener {
 
         }
 
-        binding.imageSendPost.setOnClickListener(View.OnClickListener {
-            if (binding.txtWritePost.text.isEmpty()) {
-                binding.txtWritePost.setError("Enter your Post")
-            } else {
-                addPost(encodedImage, userId)
-                getAllPost(userId)
+        binding.txtWritePost.addTextChangedListener { charSequence  ->
+            if (charSequence !=null){
+                binding.imageSendPost.visibility=View.VISIBLE
+
+                binding.imageSendPost.setOnClickListener(View.OnClickListener {
+                    if (binding.txtWritePost.text.isEmpty()) {
+                        binding.txtWritePost.setError("Enter your Post")
+                    } else {
+                        addPost(encodedImage, userId)
+                        getAllPost(userId)
+                    }
+                })
+            }else{
+                binding.imageSendPost.visibility=View.GONE
+
             }
-        })
+
+        }
+      //  binding.txtWritePost.addTextChangedListener()
+
         getAllPost(userId)
         Picasso.get()
             .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
             .into(   binding.imageUserSendPost)
       //  getTecaherInfo(userId)
 
-        binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
+        //binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
 
         return binding.root
     }
@@ -154,6 +168,7 @@ class HomeFragment : Fragment() ,PostListener {
                                 post.teacherName = user.name
                                 post.clubName = user.club
                                 post.numberOfNum = 0
+                                post.numberOfComment = 0
                                 post.isLike = false
                                 //    post.teacherName = user.name
 
@@ -279,6 +294,7 @@ class HomeFragment : Fragment() ,PostListener {
     override fun onPostClicked(post: Post) {
         val intent = Intent(activity  ,PostDetailsActivity::class.java)
         intent.putExtra("Post", post)
+        intent.putExtra("comment", post.numberOfComment)
      //   preferenceManager!!.putString(Constants.KEY_USER , post!!.id)
 
         startActivity(intent)

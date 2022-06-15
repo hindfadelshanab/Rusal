@@ -52,7 +52,6 @@
         android:layout_height="@dimen/_30sdp"
         tools:src="@drawable/ic_launcher_background"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_8sdp"
 
         />
 

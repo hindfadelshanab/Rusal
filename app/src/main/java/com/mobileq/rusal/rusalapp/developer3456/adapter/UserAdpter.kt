@@ -29,6 +29,7 @@ class UserAdpter(private val mList: List<User> , var userListener: UserListener)
 
         val itemsViewModel = mList[position]
         holder.txtUserName.setText(itemsViewModel.name)
+        holder.txtUserEmail.setText(itemsViewModel.email)
 
         Picasso.get().load(itemsViewModel.image)
             .into(holder.imageView)
@@ -46,5 +47,6 @@ class UserAdpter(private val mList: List<User> , var userListener: UserListener)
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
         val imageView: ImageView = itemView.findViewById(R.id.img_user)
         val txtUserName: TextView = itemView.findViewById(R.id.txt_userName)
+        val txtUserEmail: TextView = itemView.findViewById(R.id.txt_userEmail)
     }
 }

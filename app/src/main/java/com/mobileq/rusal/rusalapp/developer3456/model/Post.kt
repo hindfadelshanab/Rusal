@@ -10,7 +10,9 @@ class Post (
     var clubName: String? = null,
     var teacherName: String? = null,
     var teacherImage: String? = null,
+    var numberOfComment:Int?= null ,
     var likeBy:ArrayList<String> ? =null
+
 ):Parcelable{
     constructor(parcel: Parcel) : this(
         parcel.readString(),
@@ -21,6 +23,7 @@ class Post (
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
+        parcel.readInt(),
     )
 
     constructor(
@@ -32,7 +35,8 @@ class Post (
         clubName: String?,
         teacherName: String?,
         teacherImage: String?,
-        likeBy: Array<Any>?
+        likeBy: Array<Any>? ,
+        numberOfComment: Int?
     ) : this()
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -44,6 +48,7 @@ class Post (
         parcel.writeString(clubName)
         parcel.writeString(teacherName)
         parcel.writeString(teacherImage)
+        parcel.writeValue(numberOfComment)
     }
 
     override fun describeContents(): Int {

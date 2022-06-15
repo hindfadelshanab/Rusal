@@ -21,11 +21,13 @@ class IntroSliderAdapter(private val introSlides: List<IntroSlide>) :
 
       //  private val textTitle = view.findViewById<TextView>(R.id.imageView1)
         private val textDescription = view.findViewById<TextView>(R.id.text_slid)
+        private val textDescription2 = view.findViewById<TextView>(R.id.text_slid2)
         private val imageIcon = view.findViewById<ImageView>(R.id.imageView1)
 
         fun bind(introSlide: IntroSlide) {
 
             textDescription.text = introSlide.description
+            textDescription2.text = introSlide.description2
             imageIcon.setImageResource(introSlide.image)
         }
     }

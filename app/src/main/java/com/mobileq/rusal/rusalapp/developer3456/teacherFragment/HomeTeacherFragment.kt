@@ -189,6 +189,7 @@ class HomeTeacherFragment : Fragment() , PostListener {
                                 post.postImage = imageUrl
                                 post.teacherName = user.name
                                 post.clubName = user.club
+                                post.numberOfComment = 0
                                 post.numberOfNum = 0
                                 post.isLike = false
                             //    post.teacherName = user.name

@@ -50,16 +50,21 @@ class SliderScreenActivity : AppCompatActivity() {
         introSliderAdapter= IntroSliderAdapter(
             listOf(
                 IntroSlide(
-                    "مرحبا بك في تطبيق رسل",
-                    R.drawable.aa
+                    "تواصل مع المعلمين .",
+                     "يوفر تطبيق رسل محادثات جماعية مع المعلمين والطلاب للنادي ,وايضا محادثات فردية",
+                    R.drawable.ic_undraw_growth_curve_re_t5s7
                 ),
                 IntroSlide(
                     "سجل وشارك معنا",
-                    R.drawable.aaa
+                    "شاركنا بماذا تفكر وتفاعل على منشورات المعلمين والطلاب في نوادي الاعلام ,الوسائط والفنون."
+                     ,
+                    R.drawable.ic_undraw_sculpting__1_c9p
                 ),
                 IntroSlide(
-                    "في نوادي الاعلام ,الوسائط والفنون",
-                    R.drawable.ff
+                    "شارك موهبتك",
+                    "يتيح لك تطبيق رسل مشاركة موهبتك ومراجعتها من قبل المعلمين ."
+                    ,
+                    R.drawable.ic_undraw_online_media_re_r9qv
                 )
             )
         )

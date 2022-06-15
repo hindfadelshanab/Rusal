@@ -3,6 +3,7 @@ package com.mobileq.rusal.rusalapp.developer3456
 import Post
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,14 +44,22 @@ class PostDetailsActivity : AppCompatActivity() {
         }
         if (post!!.teacherImage !== null && post!!.teacherImage !== "") {
             Picasso.get().load(post!!.teacherImage)
-                .into(binding.imagePostUserProfile)
+          //      .into(binding.imagePostUserProfile)
 
         }
 
         binding.txtNumberOfLike.setText(post!!.numberOfNum.toString())
-        binding.txtPostUserName.setText(post!!.teacherName.toString())
-        binding.txtPostClubName.setText(post!!.clubName.toString())
+       // binding.txtPostUserName.setText(post!!.teacherName.toString())
+        //binding.txtPostClubName.setText(post!!.clubName.toString())
         binding.txtPostDescription.setText(post!!.postDec.toString())
+
+        db.collection("Post").document(post.postId.toString()).collection("Comment").get().addOnSuccessListener { docs ->
+
+            Log.e("number of comment" , "size : ${docs.size()}");
+            binding.txtNumberOfComment.text= docs.size().toString()
+
+
+        }
 
         var user = User()
 
