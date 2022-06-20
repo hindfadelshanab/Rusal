@@ -121,7 +121,9 @@ class MainActivity : AppCompatActivity() {
                 var studentName =
                     binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentName)
                 studentName.text = student.name
-
+                var studentEmail=
+                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
+                studentEmail.text = student.email
                 Picasso.get()
                     .load(student.image)
                     .into(studentImage)

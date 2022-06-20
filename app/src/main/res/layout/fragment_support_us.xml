@@ -8,32 +8,43 @@
     android:gravity="top"
     tools:context=".Frgmant.SupportUsFragment">
 
+    <ImageView
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+
+        android:src="@drawable/rosal_logo"
+        android:layout_gravity="center"
+        />
     <LinearLayout
         android:id="@+id/layout_share"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_64sdp"
+        android:gravity="end"
         android:orientation="horizontal"
         >
-        <ImageView
-            android:layout_width="@dimen/_30sdp"
-            android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ic_baseline_share_24"
 
-            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Share App"
+            android:text="شارك التطبيق"
+            android:textStyle="bold"
+            android:layout_marginEnd="16sp"
             android:layout_gravity="center"
             android:layout_marginStart="@dimen/_12sdp"
             android:textSize="@dimen/_18ssp"
             android:textColor="@color/black"
 
             />
+        <ImageView
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:src="@drawable/ic_baseline_share_24"
 
+            />
     </LinearLayout>
 
 
@@ -44,25 +55,29 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:paddingEnd="@dimen/_16sdp"
+        android:gravity="end"
         android:layout_marginTop="@dimen/_12sdp"
         android:orientation="horizontal"
         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="قيَم التطبيق"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:textSize="@dimen/_18ssp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:textColor="@color/black"
+
+            />
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:src="@drawable/ic_baseline_star_rate_24"
 
             />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Rate App"
-            android:layout_gravity="center"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:textSize="@dimen/_18ssp"
-            android:textColor="@color/black"
-
-            />
-
     </LinearLayout>
 </LinearLayout>

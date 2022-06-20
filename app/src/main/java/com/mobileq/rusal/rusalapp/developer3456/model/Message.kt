@@ -18,4 +18,5 @@ class Message {
     var receiverId: String? = null
     var receiverName: String? = null
     var receiverImage: String? = null
+     var messageImage:String? = null
 }

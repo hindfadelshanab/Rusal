@@ -24,9 +24,9 @@
         <activity
             android:name=".GuestActivity"
             android:exported="false" />
-        <activity
-            android:name=".PublicPostActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name="p"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".Frgmant.IndividualismChatActivity"
             android:exported="false"
@@ -35,6 +35,7 @@
         <!-- android:exported="false" /> -->
         <activity
             android:name=".ChatActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".Frgmant.MakeChatActivity"

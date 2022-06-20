@@ -52,19 +52,19 @@ class SliderScreenActivity : AppCompatActivity() {
                 IntroSlide(
                     "تواصل مع المعلمين .",
                      "يوفر تطبيق رسل محادثات جماعية مع المعلمين والطلاب للنادي ,وايضا محادثات فردية",
-                    R.drawable.ic_undraw_growth_curve_re_t5s7
+                    R.drawable.slid1
                 ),
                 IntroSlide(
                     "سجل وشارك معنا",
                     "شاركنا بماذا تفكر وتفاعل على منشورات المعلمين والطلاب في نوادي الاعلام ,الوسائط والفنون."
                      ,
-                    R.drawable.ic_undraw_sculpting__1_c9p
+                    R.drawable.slid2
                 ),
                 IntroSlide(
                     "شارك موهبتك",
                     "يتيح لك تطبيق رسل مشاركة موهبتك ومراجعتها من قبل المعلمين ."
                     ,
-                    R.drawable.ic_undraw_online_media_re_r9qv
+                    R.drawable.slid3
                 )
             )
         )

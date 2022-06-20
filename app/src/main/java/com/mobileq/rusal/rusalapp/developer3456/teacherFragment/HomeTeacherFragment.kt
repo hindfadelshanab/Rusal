@@ -149,7 +149,7 @@ class HomeTeacherFragment : Fragment() , PostListener {
                     val post: Post = documentSnapshot.toObject(Post::class.java)
                     data.add(post)
                 }
-                postAdpter = PostAdpter(data, activity, userId , this)
+                postAdpter = PostAdpter(data, activity, userId , this , false)
                 binding.postTecRc.setAdapter(postAdpter)
                 postAdpter.notifyDataSetChanged()
                 binding.progressBarPost.visibility = View.GONE

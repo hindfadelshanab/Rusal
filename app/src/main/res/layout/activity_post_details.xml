@@ -28,14 +28,14 @@
         <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/img_postImage"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_250sdp"
+        android:layout_height="@dimen/_280sdp"
         android:scaleType="fitXY"
         tools:src="@drawable/ic_launcher_background"
-        android:layout_marginBottom="4dp"
         app:riv_corner_radius_bottom_right="24dp"
+            app:layout_constraintBottom_toTopOf="@id/layout"
+
         app:riv_corner_radius_bottom_left="24dp"
         app:riv_mutate_background="true"
-        app:riv_tile_mode="repeat"
         app:riv_oval="false"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +44,7 @@
         />
 
                 <LinearLayout
+
                     android:id="@+id/layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +52,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginBottom="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
 
                     android:layout_marginStart="@dimen/_8sdp"
                     android:layout_marginEnd="@dimen/_8sdp"
@@ -109,9 +110,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/_12sdp"
-                        android:layout_gravity="center"
                         android:fontFamily="sans-serif-thin"
                         android:layout_weight="2"
+                        android:textAlignment="viewEnd"
 
                         tools:text="نص تعريف محتوى المنشور"
                         android:textColor="@color/black"

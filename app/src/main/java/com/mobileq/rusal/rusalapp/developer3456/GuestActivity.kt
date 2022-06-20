@@ -42,7 +42,7 @@ class GuestActivity : AppCompatActivity() , PostListener {
                     val post: Post = documentSnapshot.toObject(Post::class.java)
                     data.add(post)
                 }
-                postAdpter = PostAdpter(data, this, "" , this)
+                postAdpter = PostAdpter(data, this, "" , this , true)
                 binding.postRecS.setAdapter(postAdpter)
                 postAdpter.notifyDataSetChanged()
                 binding.progressBarPost.visibility = View.GONE

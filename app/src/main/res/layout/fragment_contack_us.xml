@@ -25,12 +25,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/_16sdp"
+        android:hint="@string/example_gmail_ccom"
+
         android:layout_marginStart="@dimen/_16sdp"
         android:background="@color/input_background"
         android:layout_marginTop="@dimen/_12sdp"
         android:padding="@dimen/_8sdp"
 
-        android:textAlignment="textEnd"
+        android:textAlignment="viewStart"
 
         />
 
@@ -54,26 +56,30 @@
         android:layout_height="@dimen/_120sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginStart="@dimen/_16sdp"
+        android:hint="Type message.."
         android:background="@color/input_background"
         android:layout_marginTop="@dimen/_12sdp"
+        android:gravity="top"
         android:padding="@dimen/_12sdp"
 
-        android:textAlignment="textEnd"
 
         />
 
 
     <Button
         android:id="@+id/btn_sendMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/_8sdp"
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_16sdp"
         android:text="Send"
+        android:textSize="@dimen/_18ssp"
 
         />
+
        <LinearLayout
            android:id="@+id/layout_phone"
 
@@ -93,7 +99,7 @@
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ic_baseline_call_24"
+            android:src="@drawable/ic_phone_icon"
 
             />
 
@@ -101,7 +107,7 @@
             android:id="@+id/txt_whatsappNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="972595648923"
+            android:text="0566020111"
             android:layout_marginStart="@dimen/_12sdp"
 
 
@@ -116,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_32sdp"
+        android:layout_marginTop="@dimen/_24sdp"
         android:layout_marginEnd="@dimen/_16sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:gravity="center"
@@ -128,7 +134,7 @@
         <ImageView
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:src="@drawable/ic_baseline_whatsapp_24"
+            android:src="@drawable/ic_whatapp_icon"
 
             />
 
@@ -136,7 +142,7 @@
             android:id="@+id/txt_phoneNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+972595648923"
+            android:text="+972566020111"
             android:layout_marginStart="@dimen/_12sdp"
 
 

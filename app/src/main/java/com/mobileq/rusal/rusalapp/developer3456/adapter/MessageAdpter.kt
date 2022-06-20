@@ -1,7 +1,7 @@
 package com.mobileq.rusal.rusalapp.developer3456.adapter
 
-import android.graphics.Bitmap
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mobileq.rusal.rusalapp.developer3456.databinding.ItemContienerReceivedMessageBinding
@@ -69,6 +69,13 @@ class MessageAdpter(
         fun setData(chatMessage: Message) {
             binding.textMessage.setText(chatMessage.message)
             binding.textDateTime.setText(chatMessage.dateTime)
+            if (chatMessage.messageImage != null) {
+                if (!chatMessage.messageImage.equals("")) {
+                    binding.messageImage.setVisibility(View.VISIBLE)
+                    Picasso.get().load(chatMessage.messageImage).into(binding.messageImage)
+                }
+            }
+
         }
 
         init {
@@ -82,6 +89,22 @@ class MessageAdpter(
         fun setData(chatMessage: Message) {
             binding.textMessage.setText(chatMessage.message)
             binding.textDateTime.setText(chatMessage.dateTime)
+
+            if (chatMessage.users !=null) {
+
+                for (u in chatMessage.users!!) {
+                    //if (chatMessage.receiverId)
+                    binding.txtReceivedName.setText(u.name);
+                }
+            }
+            if (chatMessage.messageImage != null) {
+                if (!chatMessage.messageImage.equals("")) {
+                    binding.messageImage.setVisibility(View.VISIBLE)
+                    Picasso.get().load(chatMessage.messageImage).into(binding.messageImage)
+                }
+            }
+
+
             if (chatMessage.senderImage != null) {
 
                 Picasso.get()

@@ -33,6 +33,9 @@ class PostDetailsActivity : AppCompatActivity() {
         var userId = preferenceManager!!.getString(Constants.KEY_USER_ID)
         db = FirebaseFirestore.getInstance()
 
+        getSupportActionBar()?.setTitle("تفاصيل المنشور");
+
+
         var post = intent.getParcelableExtra<Post>("Post")
         if (post!!.postImage == "") {
 

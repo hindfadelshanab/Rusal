@@ -19,14 +19,14 @@
 
         >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
-            android:text="تسجيل حساب جديد"
-            android:textColor="@color/mainColor"
-            android:textSize="@dimen/_18sdp"
-            android:textStyle="bold" />
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_16sdp"-->
+<!--            android:text="تسجيل حساب جديد"-->
+<!--            android:textColor="@color/mainColor"-->
+<!--            android:textSize="@dimen/_18sdp"-->
+<!--            android:textStyle="bold" />-->
 
         <FrameLayout
             android:id="@+id/layoutImage"
@@ -43,12 +43,13 @@
                 app:riv_oval="true"
                 />
 
-            <TextView
+            <ImageView
                 android:id="@+id/textAddImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_80sdp"
+                android:layout_height="@dimen/_80sdp"
                 android:layout_gravity="center"
                 android:text="@string/add_image"
+                android:src="@drawable/ic_baseline_person_24"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/_10sdp"
 

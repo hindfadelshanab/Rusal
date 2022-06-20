@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="@dimen/_8sdp"
     android:padding="@dimen/_4sdp">
 
@@ -12,29 +13,69 @@
         android:layout_height="@dimen/_25sdp"
         android:background="@drawable/background_image"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toBottomOf="@id/textMessage"
+        app:layout_constraintBottom_toBottomOf="@id/layout_text_mesage"
         app:layout_constraintStart_toStartOf="parent"
         app:riv_oval="true" />
 
-    <TextView
-        android:id="@+id/textMessage"
+    <LinearLayout
+        android:id="@+id/layout_text_mesage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginStart="@dimen/_4sdp"
         android:layout_marginLeft="@dimen/_4sdp"
         android:background="@drawable/background_received_message"
-        android:paddingStart="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_12sdp"
         app:layout_constraintWidth_max="wrap"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_13sdp"
         app:layout_constraintStart_toEndOf="@id/imageProfile"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.75"
+        >
+        <TextView
+            android:id="@+id/txt_received_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="dhhdh"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:paddingStart="@dimen/_16sdp"
 
-        />
+            android:textColor="#E91E63"
+
+            tools:ignore="RtlSymmetry" />
+        <TextView
+            android:id="@+id/textMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_4sdp"
+
+
+            android:paddingStart="@dimen/_12sdp"
+            android:paddingBottom="@dimen/_8sdp"
+            android:paddingEnd="@dimen/_12sdp"
+            app:layout_constraintWidth_max="wrap"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_13sdp"
+
+            />
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/message_image"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_100sdp"
+            android:scaleType="fitXY"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
+            android:visibility="gone"
+            tools:src="@drawable/ic_launcher_background"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:layout_gravity="start"
+            app:riv_corner_radius="16dp"
+            app:riv_mutate_background="true"
+
+            app:riv_oval="false"
+            />
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/textDateTime"
@@ -43,8 +84,8 @@
         android:layout_marginTop="@dimen/_4sdp"
         android:textColor="@android:color/darker_gray"
         android:textSize="@dimen/_8sdp"
-        app:layout_constraintStart_toStartOf="@id/textMessage"
-        app:layout_constraintTop_toBottomOf="@id/textMessage"
+        app:layout_constraintStart_toStartOf="@id/layout_text_mesage"
+        app:layout_constraintTop_toBottomOf="@id/layout_text_mesage"
 
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

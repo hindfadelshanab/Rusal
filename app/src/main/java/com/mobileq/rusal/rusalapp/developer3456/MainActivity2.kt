@@ -45,7 +45,8 @@ class MainActivity2 : AppCompatActivity() {
         getTeacherInfo(preferenceManager!!.getString(Constants.KEY_USER_ID))
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home2 ,R.id.nav_student_talent  ,R.id.nav_public, R.id.nav_contact , R.id.nav_support
+                R.id.nav_home2 ,R.id.nav_student_talent  ,R.id.nav_public,
+                R.id.nav_contact , R.id.nav_support
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -99,7 +100,9 @@ class MainActivity2 : AppCompatActivity() {
                 var studentName =
                     binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentName)
                 studentName.text = student.name
-
+                var studentEmail=
+                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
+                studentEmail.text = student.email
                 Picasso.get()
                     .load(student.image)
                     .into(studentImage)

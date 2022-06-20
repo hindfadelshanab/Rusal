@@ -125,7 +125,7 @@ class HomeFragment : Fragment() ,PostListener {
                         }
                         binding.progressBarPost.visibility =View.GONE
                         binding.postRecS.visibility =View.VISIBLE
-                        postAdpter = PostAdpter(data , activity , userId , this)
+                        postAdpter = PostAdpter(data , activity , userId , this , false)
                         binding.postRecS.setAdapter(postAdpter)
                         binding.postRecS.setLayoutManager(LinearLayoutManager(activity))
                         Log.e("hin", data.size.toString() + "")

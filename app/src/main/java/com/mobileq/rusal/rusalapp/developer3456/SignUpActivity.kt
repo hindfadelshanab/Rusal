@@ -51,7 +51,7 @@ class SignUpActivity : AppCompatActivity() {
 
         preferenceManager = PreferenceManager(applicationContext)
         setListener()
-
+        getSupportActionBar()?.setTitle("تسجيل");
 
     }
 
@@ -61,10 +61,6 @@ class SignUpActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
 
         })
-//        binding.textSignIn.setOnClickListener(View.OnClickListener {
-//            startActivity(Intent(this , SignInActivity::class.java))
-//
-//        })
 
         binding.radio.setOnCheckedChangeListener(RadioGroup.OnCheckedChangeListener { group, checkedId ->
             var radioButton = findViewById<View>(checkedId) as RadioButton

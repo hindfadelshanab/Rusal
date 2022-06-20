@@ -136,7 +136,7 @@
                 android:layout_marginBottom="@dimen/_4sdp"
                 android:layout_marginStart="@dimen/_12sdp"
                 android:layout_weight="2"
-                android:fontFamily="cursive"
+                android:textAlignment="viewEnd"
                 tools:text="نص تعريف محتوى المنشور"
                 android:textColor="#292828"
                 android:textSize="@dimen/_14ssp"
@@ -150,20 +150,21 @@
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/img_postImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_130sdp"
+            android:layout_height="@dimen/_200sdp"
             app:layout_constraintTop_toBottomOf="@id/layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/_8sdp"
+            app:layout_constraintBottom_toTopOf="@id/layyy"
             android:scaleType="fitXY"
 
             android:layout_marginEnd="@dimen/_8sdp"
 
-            tools:src="@drawable/aaa"
+            tools:src="@drawable/slid1"
             android:layout_marginBottom="4dp"
             app:riv_corner_radius="16dp"
             app:riv_mutate_background="true"
-            app:riv_tile_mode="repeat"
+
             app:riv_oval="false"
             />
         <ProgressBar
@@ -178,6 +179,7 @@
             />
 
     <LinearLayout
+        android:id="@+id/layyy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -216,6 +218,7 @@
 
 
         <LinearLayout
+            android:id="@+id/linearComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -242,6 +245,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/linearLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

@@ -40,6 +40,9 @@ class SignInActivity : AppCompatActivity() {
 
         setListener()
 
+       // getActionBar().setTitle()setTitle("Hello world App");
+        getSupportActionBar()?.setTitle("تسجيل الدخول");
+
     }
 
     private fun setListener() {

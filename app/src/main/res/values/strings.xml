@@ -33,6 +33,7 @@
     <string name="menu_share_talent">شاركنا موهبتك</string>
     <string name="menu_contact_us">تواصل معنا</string>
     <string name="share_app">شارك التطبيق</string>
+    <string name="example_gmail_ccom">example@gmail.ccom</string>
 
     <string-array name="clubs">
 

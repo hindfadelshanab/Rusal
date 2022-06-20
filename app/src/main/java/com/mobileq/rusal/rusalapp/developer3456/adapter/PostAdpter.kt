@@ -4,6 +4,7 @@ package com.mobileq.rusal.rusalapp.developer3456.adapter
 import Post
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.icu.number.NumberFormatter.with
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,8 @@ import com.squareup.picasso.Picasso
 import java.lang.Exception
 
 
-class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? , var userId:String , var  postListener: PostListener) : RecyclerView.Adapter<PostAdpter.ViewHolder>() {
+class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? , var userId:String
+, var  postListener: PostListener , var isPublic: Boolean) : RecyclerView.Adapter<PostAdpter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -37,12 +39,27 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val itemsViewModel = mList[position]
-        if (itemsViewModel.postImage==""){
+
+        if (isPublic){
+            holder.linearComment.visibility=View.GONE
+            holder.linearLike.visibility=View.GONE
+        }else{
+            holder.linearComment.visibility=View.VISIBLE
+            holder.linearLike.visibility=View.VISIBLE
+        }
+        if (itemsViewModel.postImage=="" ){
             holder.imageView.visibility=View.GONE
             holder.progressBar.visibility=View.GONE
-        }else if (itemsViewModel.postImage !=null) {
-            Picasso.get()
+        }
+        else if (itemsViewModel.postImage !=null &&itemsViewModel.postImage!="") {
+
+            Picasso
+                .get()
                 .load(itemsViewModel.postImage)
+                .error(R.drawable.ic_launcher_background)
+                .fit()
+            //    .resize(300 , 180)
+
                 .into(holder.imageView , object :Callback{
                     override fun onSuccess() {
                         holder.imageView.visibility =View.VISIBLE
@@ -55,32 +72,33 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
                     }
                 })
 
+       }
+        holder.itemView.setOnClickListener { view -> postListener.onPostClicked(itemsViewModel)
+
         }
-        holder.imageView.setOnClickListener { view -> postListener.onPostClicked(itemsViewModel)
+        holder.linearComment.setOnClickListener { view -> postListener.onPostClicked(itemsViewModel)
 
         }
 
         holder.textViewDec.text = itemsViewModel.postDec
         holder.textViewNumberOfLick.text = "${itemsViewModel.numberOfNum.toString()} اعجاب"
-        Picasso.get()
+        Picasso
+            .get()
             .load(itemsViewModel.teacherImage)
+    .placeholder(R.drawable.ic__70076_account_avatar_client_male_person_icon)
+
+            .error(R.drawable.ic__70076_account_avatar_client_male_person_icon)
             .into(holder.imageViewUserProfile)
+
         holder.textViewUserName.setText(itemsViewModel.teacherName)
         holder.textViewClubName.setText("(${itemsViewModel.clubName})")
+
+
+
         if (userId == ""){
             holder.textViewNumberOfLick.visibility =View.GONE
             holder.likeImage.visibility =View.GONE
         }
-
-//
-//        if (usersLikePostList.contains(userId) && itemsViewModel.isLike == true ) {
-//            holder.likeImage.setImageResource(R.drawable.ic__fill_heart)
-//
-//        } else {
-//            holder.likeImage.setImageResource(R.drawable.ic_heart)
-//        }
-
-
             if (itemsViewModel.likeBy!!.contains(userId)){
                 holder.likeImage.setImageResource(R.drawable.ic__fill_heart)
             }else{
@@ -91,6 +109,9 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
 
             Log.e("number of comment" , "size : ${docs.size()}");
             holder.textViewNumberOfComment.text = "${docs.size()} تعليق"
+//            if (postListener !=null){
+//
+//            }
         }
         holder.imageShare.setOnClickListener {
             val intent= Intent()
@@ -99,6 +120,7 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
             intent.type="text/plain"
             context?.startActivity(Intent.createChooser(intent,"Share To:"))
         }
+
 
 
 
@@ -112,13 +134,6 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
                 itemsViewModel.likeBy!!.add(userId);
                 holder.likeImage.setImageResource(R.drawable.ic__fill_heart)
             }
-//                if (!itemsViewModel.likeBy!!.contains(userId)) {
-//                    itemsViewModel.likeBy!!.add(userId);
-//                    holder.likeImage.setImageResource(R.drawable.ic__fill_heart)
-//                    holder.textViewNumberOfLick.text = itemsViewModel.numberOfNum.toString()
-//
-//                }
-
 
 
             var post =Post()
@@ -131,7 +146,19 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
             post.isLike =true
             post.numberOfComment = itemsViewModel.numberOfComment
             post.numberOfNum = itemsViewModel.likeBy!!.size
-            updatePost(itemsViewModel.postId.toString() ,post )
+
+
+            db.collection("Post").document(itemsViewModel.postId.toString()).set(post).addOnSuccessListener {
+                //  Toast.makeText(context ,"post update",Toast.LENGTH_LONG).show()
+
+
+                holder.textViewNumberOfLick.text="${post.likeBy!!.size.toString()}اعجاب "
+
+
+
+            }
+       //     updatePost(itemsViewModel.postId.toString() ,post )
+
         }
 
     }
@@ -142,6 +169,8 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
 
     // Holds the views for adding it to image and text
     class ViewHolder(ItemView: View) : RecyclerView.ViewHolder(ItemView) {
+
+
         val imageView: ImageView = itemView.findViewById(R.id.img_postImage)
         val imageViewUserProfile: ImageView = itemView.findViewById(R.id.imagePostUserProfile)
         val textViewDec: TextView = itemView.findViewById(R.id.txt_PostDescription)
@@ -152,18 +181,14 @@ class PostAdpter(private val mList: List<Post>, var context: FragmentActivity? ,
         val textViewClubName: TextView = itemView.findViewById(R.id.txt_post_club_name)
         val textViewNumberOfComment: TextView = itemView.findViewById(R.id.txt_numberOfComment)
         val imageShare: LinearLayout = itemView.findViewById(R.id.layoyt_share)
+        val  linearComment :LinearLayout = itemView.findViewById(R.id.linearComment);
+        val  linearLike :LinearLayout = itemView.findViewById(R.id.linearLike);
 
     }
 
     fun updatePost(postId:String , newPost:Post){
 
 
-
-        db.collection("Post").document(postId).set(newPost).addOnSuccessListener {
-          //  Toast.makeText(context ,"post update",Toast.LENGTH_LONG).show()
-
-
-        }
 
     }
 }

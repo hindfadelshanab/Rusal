@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_8sdp"
-            android:text="Create New Account?"
+            android:text="إنشاء حساب جديد"
             android:textStyle="bold"
             android:textSize="@dimen/_13sdp"
             android:textColor="#50575C"
