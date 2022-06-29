@@ -8,21 +8,17 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextWatcher
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
@@ -242,7 +238,7 @@ class HomeFragment : Fragment(), PostListener {
 
     private fun takeImage() {
         lifecycleScope.launchWhenStarted {
-            getTmplatestTmpUri().let { uri ->
+            getTempLatestTmpUri().let { uri ->
                 latestTmpUri = uri
                 takeImageResult.launch(uri)
             }
@@ -263,18 +259,18 @@ class HomeFragment : Fragment(), PostListener {
 
     private val selectImageFromGalleryResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-            latestTmpUri?.let {
-                //   uploadImage(it)
-
+            uri?.let {
                 binding.imageForPost.visibility = View.VISIBLE
-
                 binding.imageForPost.setImageURI(it)
+                latestTmpUri = it
             }
+            Log.d("TAG", ": selectImageFromGalleryResult uri $uri")
+            Log.d("TAG", ": selectImageFromGalleryResult latestTmpUri $latestTmpUri")
         }
 
     private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
 
-    private fun getTmplatestTmpUri(): Uri {
+    private fun getTempLatestTmpUri(): Uri {
         val tmpFile =
             File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
                 createNewFile()
