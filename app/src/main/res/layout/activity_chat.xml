@@ -95,16 +95,17 @@
         app:layout_constraintTop_toBottomOf="@id/viewSupporter"
 
         />
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/view_background"
         app:layout_constraintEnd_toEndOf="@id/view_background"
         app:layout_constraintStart_toStartOf="@id/view_background"
-        app:layout_constraintTop_toTopOf="@id/view_background"
 
-        />
+        app:layout_constraintTop_toTopOf="@id/view_background" />
     <FrameLayout
         android:id="@+id/layoutSend"
         android:layout_width="@dimen/_40sdp"

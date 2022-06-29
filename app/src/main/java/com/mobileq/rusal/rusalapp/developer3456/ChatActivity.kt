@@ -5,14 +5,13 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.mobileq.rusal.rusalapp.developer3456.adapter.MessageAdpter
@@ -90,158 +89,127 @@ class ChatActivity : AppCompatActivity() {
 //            message.
 //            message.fromClub = studentClub
 //            message.dateTime = getReadableDateTime(Date())
-            if (binding.inputMessage.text.toString().isEmpty()){
-                Toast.makeText(this , "Enter message" , Toast.LENGTH_LONG).show()
-            }else {
-                sendMessage(studentClub.toString(), encodedImage)
 
-            }
+            sendMessage(studentClub.toString())
+
+
         }
         setContentView(binding.root)
     }
 
 
-    fun sendMessage(userClub:String, fileUri: Uri?) {
-
-    if (fileUri !=null){
-        var fileName = UUID.randomUUID().toString() + ".jpg";
-        var refStorage  :StorageReference= FirebaseStorage.getInstance().getReference().child("images/"+fileName);
-
-        refStorage.putFile(fileUri).addOnSuccessListener(OnSuccessListener{task ->
-            var result =task.storage.downloadUrl
-            result.addOnSuccessListener(OnSuccessListener {it
-                it.toString()
-                val ref: DocumentReference =
-                    db.collection("Messages").document()
-
-
-                var message = Message()
-                var usersList: ArrayList<User> = intent.getParcelableArrayListExtra<User>("users")!!
-                message.message = binding.inputMessage.text.toString()
-                message.messageId = ref.id
-                message.senderId = preferenceManager!!.getString(Constants.KEY_USER_ID)
-                message.senderName = currentStudent.name
-                message.senderImage = currentStudent.image
-                message.users = usersList
-                message.messageImage = it.toString()
-                message.fromClub = userClub
-                message.dateTime = getReadableDateTime(Date())
-             //   message.messageImage = it.toString()
-                ref.set(message).addOnSuccessListener { doc ->
-                    binding.inputMessage.text.clear()
-                    encodedImage = null
-                    binding.imageInchat.setImageResource( R.drawable.ic_baseline_photo_24)
-                    getAllMessage(userClub)
+    private fun sendMessage(userClub: String) {
+        val messageText = binding.inputMessage.text.toString()
+        if (messageText.isEmpty() && encodedImage == null) {
+            Toast.makeText(this, "Enter message", Toast.LENGTH_LONG).show()
+        } else {
+            if (encodedImage != null) {
+                uploadImage {
+                    sendMessage(club = userClub, messageText = messageText, imageUrl = it)
                 }
-            })
-
-        })
-    }else{
-        val ref: DocumentReference =
-            db.collection("Messages").document()
-        var message = Message()
-        var usersList: ArrayList<User> = intent.getParcelableArrayListExtra<User>("users")!!
-        message.message = binding.inputMessage.text.toString()
-        message.messageId = ref.id
-        message.senderId = preferenceManager!!.getString(Constants.KEY_USER_ID)
-        message.senderName = currentStudent.name
-        message.senderImage = currentStudent.image
-        message.users = usersList
-//        message.messageImage =""
-        message.fromClub = userClub
-        message.dateTime = getReadableDateTime(Date())
-
-       // message.messageId = ref.id
-        ref.set(message).addOnSuccessListener { doc ->
-            binding.inputMessage.text.clear()
-            encodedImage = null
-            binding.imageInchat.setImageResource( R.drawable.ic_baseline_photo_24)
-            getAllMessage(userClub)
+            } else {
+                sendMessage(club = userClub, messageText = messageText)
+            }
         }
     }
 
+    private fun uploadImage(onUploadImageFinished: (String) -> Unit) {
+        encodedImage?.let { imageUri ->
+
+            val fileName = UUID.randomUUID().toString() + ".jpg";
+            val refStorage: StorageReference =
+                FirebaseStorage.getInstance().reference.child("images/$fileName")
+
+            refStorage.putFile(imageUri).addOnSuccessListener { task ->
+                task.storage.downloadUrl.addOnSuccessListener {
+                    onUploadImageFinished(it.toString())
+                }
+            }
+        } ?: onUploadImageFinished("")
 
 
+    }
 
+    private fun sendMessage(club: String, messageText: String, imageUrl: String = "") {
+        val messageRef: DocumentReference = db.collection("Messages").document()
+        val messageDto = Message()
+        val usersList: ArrayList<User> = intent.getParcelableArrayListExtra<User>("users")!!
+        messageDto.apply {
+            messageId = messageRef.id
+            senderId = preferenceManager!!.getString(Constants.KEY_USER_ID)
+            senderName = currentStudent.name
+            senderImage = currentStudent.image
+            message = messageText
+            val d = Date()
+            dateTime = getReadableDateTime(d)
+            time = d.time
+            users = usersList
+            fromClub = club
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//            .addOnSuccessListener {  }
-//        if (currentStudent.club =="نادي الاعلام"){
-//            val ref: DocumentReference = db.collection("PressChat").document()
-//            message.messageId = ref.id
-//            ref.set(message)
-//
-//        }else if (currentStudent.club =="نادي الوسائط"){
-//
-//        }
-
-
+            messageImage = imageUrl
+        }
+        messageRef.set(messageDto).addOnCompleteListener {
+            binding.inputMessage.text.clear()
+            encodedImage = null
+            binding.imageInchat.setImageResource(R.drawable.ic_baseline_photo_24)
+            getAllMessage(club)
+        }
     }
 
     private fun getReadableDateTime(date: Date): String? {
         return SimpleDateFormat("MMMM dd, yyyy - hh:mm a", Locale.getDefault()).format(date)
     }
 
-    fun getAllMessage(userClub: String) {
-        var messageList = ArrayList<Message>()
+    private fun getAllMessage(userClub: String) {
+        Log.d("TAG", "getAllMessage: userClub $userClub")
+        changeLoadingStatus(true)
+        val messageList = ArrayList<Message>()
         val count: Int = messageList.size
-        db.collection("Messages").get().addOnSuccessListener { documents ->
+        db.collection("Messages")
+            .whereEqualTo("fromClub", userClub)
+            .get()
+            .addOnCompleteListener {
+                Log.d("TAG", "getAllMessage: ${it.result.documents.size}")
+            }
+            .addOnSuccessListener { documents ->
+                val messages = documents.toObjects(Message::class.java)
+                messages.sortBy {
+                    it.time
+                }
+                changeLoadingStatus(false)
+                changeEmptyStatus(messages.isNotEmpty())
 
-            for (doc in documents) {
-                var message = doc.toObject<Message>()
-                if (message.fromClub.equals(userClub)) {
-                    messageList.add(message)
+                initMessageAdapter(messages)
+
+                Collections.sort(messageList, Comparator<Message> { obj1: Message, obj2: Message ->
+                    obj2.dateTime!!.compareTo(
+                        obj1.dateTime!!
+                    )
+                })
+                if (count == 0) {
+                    messageAdpter.notifyDataSetChanged()
+                } else {
+                    messageAdpter.notifyItemRangeInserted(messageList.size, messageList.size)
+                    binding.chatRecyclerView.smoothScrollToPosition(messageList.size - 1)
                 }
             }
-            binding.progressBar.visibility = View.GONE
-            binding.chatRecyclerView.visibility = View.VISIBLE
-            messageAdpter =
-                MessageAdpter(messageList, preferenceManager!!.getString(Constants.KEY_USER_ID))
-            binding.chatRecyclerView.setAdapter(messageAdpter)
-            binding.chatRecyclerView.setLayoutManager(LinearLayoutManager(this))
-            binding.chatRecyclerView.scrollToPosition(messageList.size - 1)
+    }
 
-//            Collections.sort(messageList, Comparator<Message> { obj1: Message, obj2: Message ->
-//                obj1.dateTime!!.compareTo(
-//                    obj2.dateTime!!
-//                )
-//            })
+    private fun initMessageAdapter(messages: List<Message>) {
+        messageAdpter =
+            MessageAdpter(messages, preferenceManager!!.getString(Constants.KEY_USER_ID))
+        binding.chatRecyclerView.adapter = messageAdpter
+        binding.chatRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.chatRecyclerView.scrollToPosition(messages.size - 1)
+    }
 
-            Collections.sort(messageList, Comparator<Message> { obj1: Message, obj2: Message ->
-                obj2.dateTime!!.compareTo(
-                    obj1.dateTime!!
-                )
-            })
-            if (count == 0) {
-                messageAdpter.notifyDataSetChanged()
-            } else {
-                messageAdpter.notifyItemRangeInserted(messageList.size, messageList.size)
-                binding.chatRecyclerView.smoothScrollToPosition(messageList.size - 1)
-            }
+    private fun changeEmptyStatus(status: Boolean) {
+        binding.chatRecyclerView.visibility = if (status) View.VISIBLE else View.GONE
+    }
 
-//
-//            if (count == 0) {
-//                messageAdpter.notifyDataSetChanged()
-//            } else {
-//                messageAdpter.notifyItemRangeInserted(messageList.size, messageList.size)
-//                binding.chatRecyclerView.smoothScrollToPosition(messageList.size - 1)
-//            }
-        }
+    private fun changeLoadingStatus(status: Boolean) {
+        binding.progressBar.visibility = if (status) View.VISIBLE else View.GONE
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
