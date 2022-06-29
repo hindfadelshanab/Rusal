@@ -41,7 +41,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class HomeTeacherFragment : Fragment() , PostListener {
+class HomeTeacherFragment : Fragment(), PostListener {
 
     lateinit var binding: FragmentHomeTeacherBinding
     private var preferenceManager: PreferenceManager? = null
@@ -85,29 +85,30 @@ class HomeTeacherFragment : Fragment() , PostListener {
 
         Picasso.get()
             .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
-            .into(   binding.imageUserSendPost)
+            .into(binding.imageUserSendPost)
         getTecaherInfo(userId)
 
         binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
 
-        Log.e("imaggggepost" , preferenceManager!!.getString(Constants.KEY_IMAGE))
+        Log.e("imaggggepost", preferenceManager!!.getString(Constants.KEY_IMAGE))
 
         return binding.root
     }
 
-    fun  getTecaherInfo(userId: String){
-        db.collection(Constants.KEY_COLLECTION_TEACHER).document(userId).get().addOnSuccessListener { doc ->
+    fun getTecaherInfo(userId: String) {
+        db.collection(Constants.KEY_COLLECTION_TEACHER).document(userId).get()
+            .addOnSuccessListener { doc ->
 
-            var teacher = doc.toObject(User::class.java)
-            Log.e("imaggggepost2" , teacher!!.image.toString())
-            if (teacher.image != null) {
-                Picasso.get()
-                    .load(teacher.image)
-                    .resize(30,30)
-                    .centerCrop()
-                    .into(binding.imageUserSendPost)
+                var teacher = doc.toObject(User::class.java)
+                Log.e("imaggggepost2", teacher!!.image.toString())
+                if (teacher.image != null) {
+                    Picasso.get()
+                        .load(teacher.image)
+                        .resize(30, 30)
+                        .centerCrop()
+                        .into(binding.imageUserSendPost)
+                }
             }
-        }
 
     }
 
@@ -127,8 +128,8 @@ class HomeTeacherFragment : Fragment() , PostListener {
             val imageBitmap = data?.extras?.get("data") as Bitmap
 
             encodedImage = getImageUri(requireActivity(), imageBitmap)
-            if (encodedImage !=null) {
-                binding.imageForPost.visibility =View.VISIBLE
+            if (encodedImage != null) {
+                binding.imageForPost.visibility = View.VISIBLE
                 binding.imageForPost.setImageBitmap(imageBitmap)
             }
 
@@ -149,7 +150,7 @@ class HomeTeacherFragment : Fragment() , PostListener {
                     val post: Post = documentSnapshot.toObject(Post::class.java)
                     data.add(post)
                 }
-                postAdpter = PostAdpter(data, activity, userId , this , false)
+                postAdpter = PostAdpter(data, activity, userId, this, false)
                 binding.postTecRc.setAdapter(postAdpter)
                 postAdpter.notifyDataSetChanged()
                 binding.progressBarPost.visibility = View.GONE
@@ -167,7 +168,7 @@ class HomeTeacherFragment : Fragment() , PostListener {
 
     fun addPost(fileUri: Uri?, userId: String) {
 
-        binding.imageSendPost.isEnabled=false
+        binding.imageSendPost.isEnabled = false
 
         if (fileUri != null) {
             val fileName = UUID.randomUUID().toString() + ".jpg"
@@ -192,7 +193,6 @@ class HomeTeacherFragment : Fragment() , PostListener {
                                 post.numberOfComment = 0
                                 post.numberOfNum = 0
                                 post.isLike = false
-                            //    post.teacherName = user.name
                                 post.teacherImage = user.image
                                 post.likeBy = ArrayList()
                                 val ref: DocumentReference = db.collection("Post").document()
@@ -201,8 +201,8 @@ class HomeTeacherFragment : Fragment() , PostListener {
                                     binding.txtWritePost.text.clear()
                                     encodedImage = null
                                     binding.imageForPost.setImageBitmap(null)
-                                    binding.imageForPost.visibility =View.GONE
-                                    binding.imageSendPost.isEnabled=true
+                                    binding.imageForPost.visibility = View.GONE
+                                    binding.imageSendPost.isEnabled = true
 
                                     getAllPost(userId)
                                 }
@@ -232,7 +232,7 @@ class HomeTeacherFragment : Fragment() , PostListener {
                     post.clubName = user.club
                     post.numberOfNum = 0
                     post.isLike = false
-                    post.teacherImage =user.image
+                    post.teacherImage = user.image
                     post.likeBy = ArrayList()
                     post.teacherImage = user.image
 
@@ -242,9 +242,9 @@ class HomeTeacherFragment : Fragment() , PostListener {
                         binding.txtWritePost.text.clear()
                         encodedImage = null
                         binding.imageForPost.setImageBitmap(null)
-                        binding.imageForPost.visibility =View.GONE
+                        binding.imageForPost.visibility = View.GONE
 
-                        binding.imageSendPost.isEnabled=true
+                        binding.imageSendPost.isEnabled = true
 
                         getAllPost(userId)
                     }
@@ -266,8 +266,8 @@ class HomeTeacherFragment : Fragment() , PostListener {
                     //binding.imageProfile.setImageBitmap(bitmap)
                     //       binding.textAddImage.visibility = View.GONE
                     encodedImage = result.data!!.data!!
-                    if (encodedImage !=null) {
-                        binding.imageForPost.visibility =View.VISIBLE
+                    if (encodedImage != null) {
+                        binding.imageForPost.visibility = View.VISIBLE
                         binding.imageForPost.setImageBitmap(bitmap)
                     }
                 } catch (e: FileNotFoundException) {
@@ -289,8 +289,9 @@ class HomeTeacherFragment : Fragment() , PostListener {
         )
         return Uri.parse(path)
     }
+
     override fun onPostClicked(post: Post) {
-        val intent = Intent(activity  , PostDetailsActivity::class.java)
+        val intent = Intent(activity, PostDetailsActivity::class.java)
         intent.putExtra("Post", post)
         //   preferenceManager!!.putString(Constants.KEY_USER , post!!.id)
 

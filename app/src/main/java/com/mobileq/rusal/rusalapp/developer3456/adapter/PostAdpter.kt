@@ -61,8 +61,8 @@ class PostAdpter(
                 .get()
                 .load(itemsViewModel.postImage)
                 .error(R.drawable.ic_launcher_background)
-                .centerCrop()
-                .resize(300 , 200)
+//                .centerCrop()
+//                .resize(300 , 200)
 
                 .into(holder.imageView, object : Callback {
                     override fun onSuccess() {

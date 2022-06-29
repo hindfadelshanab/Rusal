@@ -21,7 +21,9 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
@@ -30,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
+import com.mobileq.rusal.rusalapp.developer3456.BuildConfig
 import com.mobileq.rusal.rusalapp.developer3456.PostDetailsActivity
 import com.mobileq.rusal.rusalapp.developer3456.adapter.PostAdpter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentHomeBinding
@@ -39,11 +42,12 @@ import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
 import com.mobileq.rusal.rusalapp.developer3456.utilites.PreferenceManager
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
 import kotlin.collections.ArrayList
 
-class HomeFragment : Fragment() ,PostListener {
+class HomeFragment : Fragment(), PostListener {
 
     lateinit var binding: FragmentHomeBinding
     private var preferenceManager: PreferenceManager? = null
@@ -53,6 +57,8 @@ class HomeFragment : Fragment() ,PostListener {
     private var encodedImage: Uri? = null
     val REQUEST_IMAGE_CAPTURE = 1
     lateinit var post: Post
+    private var latestTmpUri: Uri? = null
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -62,49 +68,59 @@ class HomeFragment : Fragment() ,PostListener {
         preferenceManager = PreferenceManager(activity)
         db = FirebaseFirestore.getInstance()
 
-        var userId =preferenceManager!!.getString(Constants.KEY_USER_ID)
+        var userId = preferenceManager!!.getString(Constants.KEY_USER_ID)
         binding.imageFromGallery.setOnClickListener { view ->
-            val intent =
-                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            pickImage.launch(intent)
+//            val intent =
+//                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            //         pickImage.launch(intent)
+            selectImageFromGallery()
         }
         binding.imageFromCamera.setOnClickListener { view ->
-            dispatchTakePictureIntent()
+            takeImage()
+
 
         }
 
-        binding.txtWritePost.addTextChangedListener { charSequence  ->
-            if (charSequence !=null){
-                binding.imageSendPost.visibility=View.VISIBLE
-
-                binding.imageSendPost.setOnClickListener(View.OnClickListener {
-                    if (binding.txtWritePost.text.isEmpty()) {
-                        binding.txtWritePost.setError("Enter your Post")
-                    } else {
-                        addPost(encodedImage, userId)
-                        getAllPost(userId)
-                    }
-                })
-            }else{
-                binding.imageSendPost.visibility=View.GONE
-
+//        binding.txtWritePost.addTextChangedListener { charSequence  ->
+//            if (charSequence !=null){
+//                binding.imageSendPost.visibility=View.VISIBLE
+//
+//                binding.imageSendPost.setOnClickListener(View.OnClickListener {
+//                    if (binding.txtWritePost.text.isEmpty()) {
+//                        binding.txtWritePost.setError("Enter your Post")
+//                    } else {
+//                        addPost(encodedImage, userId)
+//                        getAllPost(userId)
+//                    }
+//                })
+//            }else{
+//                binding.imageSendPost.visibility=View.GONE
+//
+//            }
+//
+//        }
+        binding.imageSendPost.setOnClickListener(View.OnClickListener {
+            if (binding.txtWritePost.text.isEmpty()) {
+                binding.txtWritePost.setError("Enter your Post")
+            } else {
+                addPost(userId)
+                getAllPost(userId)
             }
-
-        }
+        })
 
         getAllPost(userId)
         Picasso.get()
             .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
-            .into(   binding.imageUserSendPost)
+            .into(binding.imageUserSendPost)
         return binding.root
     }
 
-    fun getAllPost(userId:String) {
-       var student: User =User()
+    fun getAllPost(userId: String) {
+        var student: User = User()
         var data = ArrayList<Post>()
         data.clear()
-        binding.progressBarPost.visibility =View.VISIBLE
+        binding.progressBarPost.visibility = View.VISIBLE
         db.collection(Constants.KEY_COLLECTION_STUDENT)
             .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
             .get().addOnSuccessListener { doc ->
@@ -118,17 +134,17 @@ class HomeFragment : Fragment() ,PostListener {
                             }
 
                         }
-                        binding.progressBarPost.visibility =View.GONE
-                        binding.postRecS.visibility =View.VISIBLE
-                        postAdpter = PostAdpter(data , activity , userId , this , false)
+                        binding.progressBarPost.visibility = View.GONE
+                        binding.postRecS.visibility = View.VISIBLE
+                        postAdpter = PostAdpter(data, activity, userId, this, false)
                         binding.postRecS.setAdapter(postAdpter)
                         binding.postRecS.setLayoutManager(LinearLayoutManager(activity))
                         Log.e("hin", data.size.toString() + "")
 
                     }).addOnFailureListener(OnFailureListener { e ->
                         Log.e("hind", e.message!!)
-                        binding.progressBarPost.visibility =View.VISIBLE
-                        binding.postRecS.visibility =View.GONE
+                        binding.progressBarPost.visibility = View.VISIBLE
+                        binding.postRecS.visibility = View.GONE
                     })
             }
 
@@ -136,16 +152,15 @@ class HomeFragment : Fragment() ,PostListener {
     }
 
 
+    private fun addPost(userId: String) {
 
+        Log.e("file uri", " fff ${latestTmpUri}")
+        binding.imageSendPost.isEnabled = false
 
-    fun addPost(fileUri: Uri?, userId: String) {
-
-        binding.imageSendPost.isEnabled=false
-
-        if (fileUri != null) {
+        if (latestTmpUri != null) {
             val fileName = UUID.randomUUID().toString() + ".jpg"
             val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-            refStorage.putFile(fileUri)
+            refStorage.putFile(latestTmpUri!!)
                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
                     taskSnapshot.storage.downloadUrl.addOnSuccessListener {
                         var imageUrl = it.toString()
@@ -171,10 +186,10 @@ class HomeFragment : Fragment() ,PostListener {
                                 post.postId = ref.id
                                 ref.set(post).addOnSuccessListener {
                                     binding.txtWritePost.text.clear()
-                                    encodedImage = null
+                                    latestTmpUri = null
                                     binding.imageForPost.setImageBitmap(null)
-                                    binding.imageForPost.visibility =View.GONE
-                                    binding.imageSendPost.isEnabled=true
+                                    binding.imageForPost.visibility = View.GONE
+                                    binding.imageSendPost.isEnabled = true
 
                                     getAllPost(userId)
                                 }
@@ -204,7 +219,7 @@ class HomeFragment : Fragment() ,PostListener {
                     post.clubName = user.club
                     post.numberOfNum = 0
                     post.isLike = false
-                    post.teacherImage =user.image
+                    post.teacherImage = user.image
                     post.likeBy = ArrayList()
                     post.teacherImage = user.image
 
@@ -214,9 +229,9 @@ class HomeFragment : Fragment() ,PostListener {
                         binding.txtWritePost.text.clear()
                         encodedImage = null
                         binding.imageForPost.setImageBitmap(null)
-                        binding.imageForPost.visibility =View.GONE
+                        binding.imageForPost.visibility = View.GONE
 
-                        binding.imageSendPost.isEnabled=true
+                        binding.imageSendPost.isEnabled = true
 
                         getAllPost(userId)
                     }
@@ -225,8 +240,57 @@ class HomeFragment : Fragment() ,PostListener {
         }
     }
 
+    private fun takeImage() {
+        lifecycleScope.launchWhenStarted {
+            getTmplatestTmpUri().let { uri ->
+                latestTmpUri = uri
+                takeImageResult.launch(uri)
+            }
+        }
+    }
+
+    private val takeImageResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                latestTmpUri?.let { uri ->
+
+                    //    uploadImage(uri)
+                    binding.imageForPost.visibility = View.VISIBLE
+                    binding.imageForPost.setImageURI(uri)
+                }
+            }
+        }
+
+    private val selectImageFromGalleryResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            latestTmpUri?.let {
+                //   uploadImage(it)
+
+                binding.imageForPost.visibility = View.VISIBLE
+
+                binding.imageForPost.setImageURI(it)
+            }
+        }
+
+    private fun selectImageFromGallery() = selectImageFromGalleryResult.launch("image/*")
+
+    private fun getTmplatestTmpUri(): Uri {
+        val tmpFile =
+            File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
+                createNewFile()
+                deleteOnExit()
+            }
+
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            tmpFile
+        )
+    }
 
     private fun dispatchTakePictureIntent() {
+
+
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         try {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
@@ -243,13 +307,14 @@ class HomeFragment : Fragment() ,PostListener {
 
             //encodedImage = getImageUri(requireActivity(), imageBitmap)
             encodedImage = data.data!!
-            if (encodedImage !=null) {
-                binding.imageForPost.visibility =View.VISIBLE
+            if (encodedImage != null) {
+                binding.imageForPost.visibility = View.VISIBLE
                 binding.imageForPost.setImageBitmap(imageBitmap)
             }
 
         }
     }
+
     private val pickImage = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result: ActivityResult ->
@@ -262,8 +327,8 @@ class HomeFragment : Fragment() ,PostListener {
                     //binding.imageProfile.setImageBitmap(bitmap)
                     //       binding.textAddImage.visibility = View.GONE
                     encodedImage = result.data!!.data!!
-                    if (encodedImage !=null) {
-                        binding.imageForPost.visibility =View.VISIBLE
+                    if (encodedImage != null) {
+                        binding.imageForPost.visibility = View.VISIBLE
                         binding.imageForPost.setImageBitmap(bitmap)
                     }
                 } catch (e: FileNotFoundException) {
@@ -272,6 +337,7 @@ class HomeFragment : Fragment() ,PostListener {
             }
         }
     }
+
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -285,10 +351,10 @@ class HomeFragment : Fragment() ,PostListener {
     }
 
     override fun onPostClicked(post: Post) {
-        val intent = Intent(activity  ,PostDetailsActivity::class.java)
+        val intent = Intent(activity, PostDetailsActivity::class.java)
         intent.putExtra("Post", post)
         intent.putExtra("comment", post.numberOfComment)
-     //   preferenceManager!!.putString(Constants.KEY_USER , post!!.id)
+        //   preferenceManager!!.putString(Constants.KEY_USER , post!!.id)
 
         startActivity(intent)
     }
