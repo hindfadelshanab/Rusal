@@ -14,7 +14,7 @@
         android:layout_marginStart="@dimen/_4sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/background_received_message"
+        android:background="@drawable/background_sent_message"
         >
         <TextView
             android:id="@+id/textMessage"

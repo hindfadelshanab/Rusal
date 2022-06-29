@@ -2,13 +2,14 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
 
 
     >
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,163 +22,164 @@
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginTop="@dimen/_12sdp"
             android:src="@drawable/ic_baseline_arrow_back_ios_24"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/img_postImage"
+            app:layout_constraintTop_toTopOf="parent"
             app:tint="@color/white" />
 
         <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/img_postImage"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_280sdp"
-        android:scaleType="fitXY"
-        tools:src="@drawable/ic_launcher_background"
-        app:riv_corner_radius_bottom_right="24dp"
+            android:id="@+id/img_postImage"
+
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/layout"
+            app:layout_constraintDimensionRatio="3:2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+ android:scaleType="fitCenter"
 
-        app:riv_corner_radius_bottom_left="24dp"
-        app:riv_mutate_background="true"
-        app:riv_oval="false"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:riv_corner_radius_bottom_left="24dp"
+            app:riv_corner_radius_bottom_right="24dp"
+            app:riv_mutate_background="true"
+            app:riv_oval="false"
+            tools:src="@drawable/ic_launcher_background"
 
-        />
+            />
 
-                <LinearLayout
+        <LinearLayout
 
-                    android:id="@+id/layout"
-                    android:layout_width="match_parent"
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:orientation="horizontal"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_postImage">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/img_comment"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic__202260_bubble_chat_chatting_comment_message_icon" />
+
+                <TextView
+                    android:id="@+id/txt_numberOfComment"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/img_postImage"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginBottom="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_12sdp"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="0" />
 
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginStart="@dimen/_12sdp"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:id="@+id/img_comment"
-                            android:layout_width="@dimen/_25sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic__202260_bubble_chat_chatting_comment_message_icon" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/txt_numberOfComment"
-                            tools:text ="0"
-                            android:textSize="@dimen/_12ssp"
-                            />
-
-                    </LinearLayout>
+            </LinearLayout>
 
 
-                    <LinearLayout
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:layout_marginStart="@dimen/_12sdp"
-                                    android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                                    <ImageView
-                                        android:id="@+id/img_like"
-                                        android:layout_width="@dimen/_25sdp"
-                                        android:layout_height="@dimen/_20sdp"
-                                        android:src="@drawable/ic_heart" />
+                <ImageView
+                    android:id="@+id/img_like"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:src="@drawable/ic_heart" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:id="@+id/txt_numberOfLike"
-                                        tools:text ="0"
-                                        android:textSize="@dimen/_12ssp"
-                                        />
+                <TextView
+                    android:id="@+id/txt_numberOfLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_12ssp"
+                    tools:text="0" />
 
-                                </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/txt_PostDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/_12sdp"
-                        android:fontFamily="sans-serif-thin"
-                        android:layout_weight="2"
-                        android:textAlignment="viewEnd"
-
-                        tools:text="نص تعريف محتوى المنشور"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/_18ssp"
-
-                        />
+            </LinearLayout>
 
 
-                </LinearLayout>
+            <TextView
+                android:id="@+id/txt_PostDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:fontFamily="sans-serif-thin"
+                android:textAlignment="viewEnd"
+
+                android:textColor="@color/black"
+                android:textSize="@dimen/_18ssp"
+                tools:text="نص تعريف محتوى المنشور"
+
+                />
+
+
+        </LinearLayout>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/commentRc"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_200sdp"
+            android:layout_margin="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_8sdp"
             app:layout_constraintBottom_toTopOf="@id/layout2"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="@dimen/_4sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/layout"
             app:layout_constraintVertical_bias="1.0"
             tools:listitem="@layout/comment_item" />
 
-            <LinearLayout
-                android:id="@+id/layout2"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/commentRc"
+
+            >
+
+            <ImageView
+                android:id="@+id/imag_send_comment"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:padding="@dimen/_4sdp"
+                android:rotation="180"
+                android:src="@drawable/ic_baseline_send_24"
+
+                />
+
+            <EditText
+                android:id="@+id/input_comment"
+
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:orientation="horizontal"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/commentRc"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-
-                >
-                <ImageView
-                    android:id="@+id/imag_send_comment"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:padding="@dimen/_4sdp"
-                    android:src="@drawable/ic_baseline_send_24"
-                    android:rotation="180"
-
-                    />
-
-                <EditText
-                    android:id="@+id/input_comment"
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:layout_marginStart="@dimen/_12sdp"
-                    android:layout_marginEnd="@dimen/_12sdp"
-                    android:hint="اكتب تعليقا"
-                    android:padding="@dimen/_8sdp"
-                    android:background="@drawable/comment_background"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:layout_weight="2"
+                android:background="@drawable/comment_background"
+                android:hint="اكتب تعليقا"
+                android:padding="@dimen/_8sdp"
 
 
-                    />
+                />
 
 
-            </LinearLayout>
-
+        </LinearLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -186,207 +188,202 @@
 </ScrollView>
 
 
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/layout1"-->
+    <!--            android:layout_margin="@dimen/_8sdp"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_marginTop="@dimen/_8sdp"-->
+    <!--            android:gravity="end"-->
+    <!--            app:layout_constraintTop_toTopOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            android:layout_marginStart="@dimen/_8sdp"-->
+    <!--            android:layout_marginEnd="@dimen/_8sdp"-->
+    <!--            android:orientation="horizontal">-->
+    <!--            <LinearLayout-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:gravity="center"-->
+    <!--                android:orientation="vertical">-->
+
+    <!--                -->
+    <!--                <com.makeramen.roundedimageview.RoundedImageView-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="@dimen/_250sdp"-->
+
+    <!--                    tools:src="@drawable/ic_launcher_background"-->
+    <!--                 />-->
+    <!--                -->
+    <!--                &lt;!&ndash;                <ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:id="@+id/img_like"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_height="@dimen/_20sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:src="@drawable/ic_baseline_favorite_24" />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                <TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:id="@+id/txt_numberOfLike"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    tools:text ="0"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    android:textSize="@dimen/_12ssp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                    />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;            </LinearLayout>&ndash;&gt;-->
+    <!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+
+    <!--&lt;!&ndash;                android:id="@+id/txt_post_club_name"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                tools:text="(نادي الاعلام)"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_weight="2"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginTop="@dimen/_4sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textSize="@dimen/_12ssp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                />&ndash;&gt;-->
+
+    <!--&lt;!&ndash;            <TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:id="@+id/txt_post_user_name"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginTop="@dimen/_4sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:ellipsize="end"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:maxLines="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_weight="2"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textColor="@color/black"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textSize="@dimen/_14ssp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
+    <!--&lt;!&ndash;                tools:text="Hindddd"&ndash;&gt;-->
+    <!--&lt;!&ndash;                />&ndash;&gt;-->
+    <!--&lt;!&ndash;            <de.hdodenhof.circleimageview.CircleImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:id="@+id/imagePostUserProfile"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_height="@dimen/_25sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                android:layout_marginLeft="@dimen/_12sdp"&ndash;&gt;-->
+    <!--&lt;!&ndash;                tools:src="@drawable/ic_launcher_background"&ndash;&gt;-->
 
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/layout1"-->
-<!--            android:layout_margin="@dimen/_8sdp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/_8sdp"-->
-<!--            android:gravity="end"-->
-<!--            app:layout_constraintTop_toTopOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginStart="@dimen/_8sdp"-->
-<!--            android:layout_marginEnd="@dimen/_8sdp"-->
-<!--            android:orientation="horizontal">-->
-<!--            <LinearLayout-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:gravity="center"-->
-<!--                android:orientation="vertical">-->
-
-<!--                -->
-<!--                <com.makeramen.roundedimageview.RoundedImageView-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="@dimen/_250sdp"-->
-
-<!--                    tools:src="@drawable/ic_launcher_background"-->
-<!--                 />-->
-<!--                -->
-<!--                &lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/img_like"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="@dimen/_20sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:src="@drawable/ic_baseline_favorite_24" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:id="@+id/txt_numberOfLike"&ndash;&gt;-->
-<!--&lt;!&ndash;                    tools:text ="0"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textSize="@dimen/_12ssp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    />&ndash;&gt;-->
-
-<!--&lt;!&ndash;            </LinearLayout>&ndash;&gt;-->
-<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
-
-<!--&lt;!&ndash;                android:id="@+id/txt_post_club_name"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                tools:text="(نادي الاعلام)"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_weight="2"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginTop="@dimen/_4sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textSize="@dimen/_12ssp"&ndash;&gt;-->
-<!--&lt;!&ndash;                />&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/txt_post_user_name"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginTop="@dimen/_4sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:ellipsize="end"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:maxLines="1"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_weight="2"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textColor="@color/black"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textSize="@dimen/_14ssp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:textStyle="bold"&ndash;&gt;-->
-<!--&lt;!&ndash;                tools:text="Hindddd"&ndash;&gt;-->
-<!--&lt;!&ndash;                />&ndash;&gt;-->
-<!--&lt;!&ndash;            <de.hdodenhof.circleimageview.CircleImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                android:id="@+id/imagePostUserProfile"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginStart="@dimen/_8sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_height="@dimen/_25sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                android:layout_marginLeft="@dimen/_12sdp"&ndash;&gt;-->
-<!--&lt;!&ndash;                tools:src="@drawable/ic_launcher_background"&ndash;&gt;-->
+    <!--&lt;!&ndash;                />&ndash;&gt;-->
 
 
-<!--&lt;!&ndash;                />&ndash;&gt;-->
+    <!--        </LinearLayout>-->
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/layout"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/layout1"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            android:layout_marginBottom="@dimen/_8sdp"-->
+    <!--            android:layout_marginStart="@dimen/_8sdp"-->
+    <!--            android:layout_marginEnd="@dimen/_8sdp"-->
+    <!--            android:orientation="horizontal">-->
+
+    <!--            &lt;!&ndash;            <LinearLayout&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:layout_marginStart="@dimen/_12sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                android:orientation="vertical">&ndash;&gt;-->
+
+    <!--            &lt;!&ndash;                <ImageView&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:id="@+id/img_like"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:layout_height="@dimen/_20sdp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:src="@drawable/ic_heart" />&ndash;&gt;-->
+
+    <!--            &lt;!&ndash;                <TextView&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:id="@+id/txt_numberOfLike"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    tools:text ="0"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    android:textSize="@dimen/_12ssp"&ndash;&gt;-->
+    <!--            &lt;!&ndash;                    />&ndash;&gt;-->
+
+    <!--            &lt;!&ndash;            </LinearLayout>&ndash;&gt;-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/txt_PostDescription"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginEnd="@dimen/_12sdp"-->
+    <!--                android:layout_gravity="top"-->
+    <!--                android:fontFamily="sans-serif-thin"-->
+    <!--                android:layout_weight="2"-->
+    <!--                tools:text="نص تعريف محتوى المنشور"-->
+    <!--                android:textColor="@color/black"-->
+    <!--                android:textSize="@dimen/_18ssp"-->
+
+    <!--                />-->
 
 
+    <!--        </LinearLayout>-->
 
 
+    <!--        <ImageView-->
+    <!--            android:id="@+id/img_postImage"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="@dimen/_150sdp"-->
+    <!--            app:layout_constraintTop_toBottomOf="@id/layout"-->
+    <!--            app:layout_constraintEnd_toEndOf="parent"-->
+    <!--            app:layout_constraintStart_toStartOf="parent"-->
+    <!--            android:layout_marginTop="@dimen/_4sdp"-->
+    <!--            android:scaleType="fitXY"-->
 
-<!--        </LinearLayout>-->
-<!--        <LinearLayout-->
-<!--            android:id="@+id/layout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/layout1"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            android:layout_marginBottom="@dimen/_8sdp"-->
-<!--            android:layout_marginStart="@dimen/_8sdp"-->
-<!--            android:layout_marginEnd="@dimen/_8sdp"-->
-<!--            android:orientation="horizontal">-->
-
-<!--            &lt;!&ndash;            <LinearLayout&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_height="wrap_content"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:gravity="center"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:layout_marginStart="@dimen/_12sdp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                android:orientation="vertical">&ndash;&gt;-->
-
-<!--            &lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:id="@+id/img_like"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:layout_width="@dimen/_25sdp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:layout_height="@dimen/_20sdp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:src="@drawable/ic_heart" />&ndash;&gt;-->
-
-<!--            &lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:id="@+id/txt_numberOfLike"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    tools:text ="0"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    android:textSize="@dimen/_12ssp"&ndash;&gt;-->
-<!--            &lt;!&ndash;                    />&ndash;&gt;-->
-
-<!--            &lt;!&ndash;            </LinearLayout>&ndash;&gt;-->
-
-<!--            <TextView-->
-<!--                android:id="@+id/txt_PostDescription"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginEnd="@dimen/_12sdp"-->
-<!--                android:layout_gravity="top"-->
-<!--                android:fontFamily="sans-serif-thin"-->
-<!--                android:layout_weight="2"-->
-<!--                tools:text="نص تعريف محتوى المنشور"-->
-<!--                android:textColor="@color/black"-->
-<!--                android:textSize="@dimen/_18ssp"-->
-
-<!--                />-->
+    <!--            />-->
 
 
-<!--        </LinearLayout>-->
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/commentRc"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@id/layout2"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/img_postImage"-->
+    <!--        app:layout_constraintVertical_bias="1.0"-->
+    <!--        android:layout_marginTop="@dimen/_12sdp"-->
+    <!--        tools:listitem="@layout/comment_item" />-->
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/layout2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:layout_margin="@dimen/_8sdp"-->
 
 
-<!--        <ImageView-->
-<!--            android:id="@+id/img_postImage"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="@dimen/_150sdp"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/layout"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            android:layout_marginTop="@dimen/_4sdp"-->
-<!--            android:scaleType="fitXY"-->
+    <!--        >-->
+    <!--        <ImageView-->
+    <!--            android:id="@+id/imag_send_comment"-->
+    <!--            android:layout_width="@dimen/_30sdp"-->
+    <!--            android:layout_height="@dimen/_30sdp"-->
+    <!--            android:padding="@dimen/_4sdp"-->
+    <!--            android:src="@drawable/ic_baseline_send_24"-->
+    <!--            android:rotation="180"-->
 
-<!--            />-->
+    <!--            />-->
 
+    <!--        <EditText-->
+    <!--            android:id="@+id/input_comment"-->
 
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/commentRc"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/layout2"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/img_postImage"-->
-<!--        app:layout_constraintVertical_bias="1.0"-->
-<!--        android:layout_marginTop="@dimen/_12sdp"-->
-<!--        tools:listitem="@layout/comment_item" />-->
-
-<!--    <LinearLayout-->
-<!--        android:id="@+id/layout2"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:layout_margin="@dimen/_8sdp"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="2"-->
+    <!--            android:layout_marginStart="@dimen/_12sdp"-->
+    <!--            android:layout_marginEnd="@dimen/_12sdp"-->
+    <!--            android:hint="اكتب تعليقا"-->
+    <!--            android:padding="@dimen/_8sdp"-->
+    <!--            android:background="@drawable/comment_background"-->
 
 
-<!--        >-->
-<!--        <ImageView-->
-<!--            android:id="@+id/imag_send_comment"-->
-<!--            android:layout_width="@dimen/_30sdp"-->
-<!--            android:layout_height="@dimen/_30sdp"-->
-<!--            android:padding="@dimen/_4sdp"-->
-<!--            android:src="@drawable/ic_baseline_send_24"-->
-<!--            android:rotation="180"-->
-
-<!--            />-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/input_comment"-->
-
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="2"-->
-<!--            android:layout_marginStart="@dimen/_12sdp"-->
-<!--            android:layout_marginEnd="@dimen/_12sdp"-->
-<!--            android:hint="اكتب تعليقا"-->
-<!--            android:padding="@dimen/_8sdp"-->
-<!--            android:background="@drawable/comment_background"-->
+    <!--            />-->
 
 
-<!--            />-->
-
-
-<!--    </LinearLayout>-->
+    <!--    </LinearLayout>-->
 

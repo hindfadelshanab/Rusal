@@ -92,16 +92,11 @@ class HomeFragment : Fragment() ,PostListener {
             }
 
         }
-      //  binding.txtWritePost.addTextChangedListener()
 
         getAllPost(userId)
         Picasso.get()
             .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
             .into(   binding.imageUserSendPost)
-      //  getTecaherInfo(userId)
-
-        //binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
-
         return binding.root
     }
 
@@ -170,9 +165,6 @@ class HomeFragment : Fragment() ,PostListener {
                                 post.numberOfNum = 0
                                 post.numberOfComment = 0
                                 post.isLike = false
-                                //    post.teacherName = user.name
-
-
                                 post.teacherImage = user.image
                                 post.likeBy = ArrayList()
                                 val ref: DocumentReference = db.collection("Post").document()
@@ -249,7 +241,8 @@ class HomeFragment : Fragment() ,PostListener {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
 
-            encodedImage = getImageUri(requireActivity(), imageBitmap)
+            //encodedImage = getImageUri(requireActivity(), imageBitmap)
+            encodedImage = data.data!!
             if (encodedImage !=null) {
                 binding.imageForPost.visibility =View.VISIBLE
                 binding.imageForPost.setImageBitmap(imageBitmap)

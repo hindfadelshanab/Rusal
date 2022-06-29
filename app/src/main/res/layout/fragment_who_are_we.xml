@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Frgmant.WhoAreWeFragment">
+
+<ImageView
+    android:layout_width="@dimen/_120sdp"
+    android:layout_height="@dimen/_120sdp"
+    android:layout_marginTop="@dimen/_46sdp"
+    android:src="@drawable/rosal_logo"
+    android:layout_gravity="center"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/who_are_we_text"
+        android:fontFamily="@font/tajawal_regular"
+        android:paddingStart="@dimen/_24sdp"
+        android:paddingEnd="@dimen/_24sdp"
+        android:layout_marginTop="@dimen/_16ssp"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/black"
+        android:lineHeight="@dimen/_35sdp"
+        android:textSize="@dimen/_16ssp"
+
+        />
+
+</LinearLayout>

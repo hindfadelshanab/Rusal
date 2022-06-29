@@ -45,11 +45,11 @@
 
             <ImageView
                 android:id="@+id/textAddImage"
-                android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_80sdp"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
                 android:layout_gravity="center"
                 android:text="@string/add_image"
-                android:src="@drawable/ic_baseline_person_24"
+                android:src="@drawable/ic_baseline_add_a_photo_24"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="@dimen/_10sdp"
 
@@ -188,18 +188,50 @@
 
 
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/textSignIn"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_10sdp"-->
+<!--            android:text="@string/sign_in"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="@dimen/_13sdp"-->
+
+<!--            />-->
+
+
+
+        <LinearLayout
             android:id="@+id/textSignIn"
-            android:layout_width="wrap_content"
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:text="@string/sign_in"
-            android:textStyle="bold"
-            android:textSize="@dimen/_13sdp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_8sdp"
 
-            />
+            >
+            <TextView
+                android:id="@+id/textCreateNewAccount2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sign_in"
+                android:textStyle="bold"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/mainColor"
 
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="لدي حساب"
+                android:textStyle="bold"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="#9A9A9A"
 
+                />
+        </LinearLayout>
     </LinearLayout>
 
 </ScrollView>

@@ -16,12 +16,7 @@
 
             />
 
-        <item
-            android:id="@+id/nav_public"
-            android:orderInCategory="100"
-            android:title="Public"
-            android:icon="@drawable/ic_baseline_public_24"
-            />
+
         <item
             android:id="@+id/nav_contact"
             android:icon="@drawable/contactus"
@@ -35,5 +30,17 @@
 
             />
 
+        <item
+            android:id="@+id/nav_public"
+            android:title="Public"
+            android:icon="@drawable/ic_baseline_public_24"
+            />
+
+        <item android:id="@+id/nav_who_are"
+
+            android:title="من نحن"
+            android:icon="@drawable/ic_files___document"
+
+            />
     </group>
 </menu>

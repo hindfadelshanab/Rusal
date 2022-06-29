@@ -29,5 +29,10 @@
         android:name="com.mobileq.rusal.rusalapp.developer3456.Frgmant.SupportUsFragment"
         android:label="ادعم رسل"
         tools:layout="@layout/fragment_support_us" />
+    <fragment
+        android:id="@+id/nav_who_are"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.Frgmant.WhoAreWeFragment"
+        android:label="من نحن"
+        tools:layout="@layout/fragment_who_are_we" />
 
 </navigation>

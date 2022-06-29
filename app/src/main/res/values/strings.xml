@@ -10,7 +10,7 @@
     <string name="name">اسم المستخدم</string>
 
     <string name="email">البريد الالكتروني</string>
-    <string name="create_new_account">Create New Account</string>
+    <string name="create_new_account">أليس لديك حساب ؟</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">تسجيل</string>
     <string name="type_a_message">Type a message</string>
@@ -34,6 +34,7 @@
     <string name="menu_contact_us">تواصل معنا</string>
     <string name="share_app">شارك التطبيق</string>
     <string name="example_gmail_ccom">example@gmail.ccom</string>
+    <string name="who_are_we_text">تطبيق رسل هو تطبيق تعليمي يهدف للربط بين المعلمين والطلاب واوليا الامور لمتابعة سير العملية التعليمة والتواصل بسهولة ,يمكن للطلاب مشاركة مواهبهم مع معلميهم والدردشة مع المعلمين والطلاب من نفس النادي</string>
 
     <string-array name="clubs">
 

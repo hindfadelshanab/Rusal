@@ -47,7 +47,7 @@
             android:background="@drawable/background_input"
             android:imeOptions="actionNext"
             android:importantForAutofill="no"
-            android:textAlignment="viewStart"
+            android:textAlignment="viewEnd"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
@@ -71,7 +71,7 @@
             android:paddingStart="@dimen/_16sdp"
             android:paddingEnd="@dimen/_16sdp"
             android:textSize="@dimen/_13sdp"
-            android:textAlignment="viewStart"
+            android:textAlignment="viewEnd"
 
             />
 
@@ -132,18 +132,50 @@
 
             />
 
-        <TextView
+<!--        <TextView-->
+<!--            android:id="@+id/textCreateNewAccount"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/_8sdp"-->
+<!--            android:text="إنشاء حساب جديد"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textSize="@dimen/_13sdp"-->
+<!--            android:textColor="#50575C"-->
+
+<!--            />-->
+        <LinearLayout
             android:id="@+id/textCreateNewAccount"
-            android:layout_width="wrap_content"
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:text="إنشاء حساب جديد"
-            android:textStyle="bold"
-            android:textSize="@dimen/_13sdp"
-            android:textColor="#50575C"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_30sdp"
 
-            />
+            >
+            <TextView
+                android:id="@+id/textCreateNewAccount2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="انشئ حسابا "
+                android:textStyle="bold"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="@color/mainColor"
 
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/create_new_account"
+                android:textStyle="bold"
+                android:textSize="@dimen/_13sdp"
+                android:textColor="#9A9A9A"
+
+                />
+
+
+        </LinearLayout>
 
     </LinearLayout>
 

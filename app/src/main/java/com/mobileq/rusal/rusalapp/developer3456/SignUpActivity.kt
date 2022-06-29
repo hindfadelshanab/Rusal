@@ -69,9 +69,7 @@ class SignUpActivity : AppCompatActivity() {
 
         }
         )
-//        val selectedId: Int = binding.radio.getCheckedRadioButtonId()
-//
-//        var radioButton = findViewById<View>(selectedId) as RadioButton
+
         binding.textSignIn.setOnClickListener { view -> onBackPressed() }
         binding.buttonSignUp.setOnClickListener { view ->
             if (isValidSignUpDetails() == true) {

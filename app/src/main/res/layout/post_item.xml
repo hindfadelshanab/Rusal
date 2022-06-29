@@ -156,7 +156,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="@dimen/_8sdp"
             app:layout_constraintBottom_toTopOf="@id/layyy"
-            android:scaleType="fitXY"
+
 
             android:layout_marginEnd="@dimen/_8sdp"
 
@@ -233,6 +233,7 @@
                 android:id="@+id/txt_numberOfComment"
                 android:textColor="@color/mainColor"
                 android:textSize="@dimen/_12ssp"
+                android:text="0 تعليق"
                 />
 
             <ImageView
@@ -259,7 +260,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_numberOfLike"
                 android:textColor="@color/mainColor"
-                android:text ="1 اعجاب"
+                android:text ="0 اعجاب"
                 android:textSize="@dimen/_12ssp"
                 />
             <ImageView
