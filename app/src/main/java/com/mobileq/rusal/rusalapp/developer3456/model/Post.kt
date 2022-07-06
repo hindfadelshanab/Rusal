@@ -8,6 +8,7 @@ class Post (
     var postImage: String? = null,
     var numberOfNum: Int? = null,
     var clubName: String? = null,
+    var teacherId: String? = null,
     var teacherName: String? = null,
     var teacherImage: String? = null,
     var numberOfComment:Int?= null ,
@@ -23,21 +24,11 @@ class Post (
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readInt(),
-    )
+        parcel.readString(),
+        parcel.readValue(Int::class.java.classLoader) as? Int,
 
-    constructor(
-        postId: String?,
-        postDec: String?,
-        isLike: Boolean?,
-        postImage: String?,
-        numberOfNum: Int?,
-        clubName: String?,
-        teacherName: String?,
-        teacherImage: String?,
-        likeBy: Array<Any>? ,
-        numberOfComment: Int?
-    ) : this()
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(postId)
@@ -46,6 +37,7 @@ class Post (
         parcel.writeString(postImage)
         parcel.writeValue(numberOfNum)
         parcel.writeString(clubName)
+        parcel.writeString(teacherId)
         parcel.writeString(teacherName)
         parcel.writeString(teacherImage)
         parcel.writeValue(numberOfComment)

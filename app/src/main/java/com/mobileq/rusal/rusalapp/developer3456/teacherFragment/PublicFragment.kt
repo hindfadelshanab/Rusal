@@ -1,10 +1,12 @@
 package com.mobileq.rusal.rusalapp.developer3456.teacherFragment
 
 import Post
+import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
@@ -15,39 +17,63 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.*
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.mobileq.rusal.rusalapp.developer3456.BuildConfig
+import com.mobileq.rusal.rusalapp.developer3456.ProfileActivity
 import com.mobileq.rusal.rusalapp.developer3456.R
 import com.mobileq.rusal.rusalapp.developer3456.adapter.PostAdpter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentHomeTeacherBinding
 import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentPublicBinding
+import com.mobileq.rusal.rusalapp.developer3456.home_feature.NewPost
+import com.mobileq.rusal.rusalapp.developer3456.home_feature.PostModelForAdapter
+import com.mobileq.rusal.rusalapp.developer3456.home_feature.comment.CommentsDialog
+import com.mobileq.rusal.rusalapp.developer3456.image_preview_feature.ImagePreviewDialog
 import com.mobileq.rusal.rusalapp.developer3456.listeners.PostListener
+import com.mobileq.rusal.rusalapp.developer3456.model.Comment
 import com.mobileq.rusal.rusalapp.developer3456.model.User
+import com.mobileq.rusal.rusalapp.developer3456.new_home_feature.NewPostListener
 import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
 import com.mobileq.rusal.rusalapp.developer3456.utilites.PreferenceManager
 import com.squareup.picasso.Picasso
+import developer.citypalestine8936ps.new_home_feature.NewPostAdapter
 import java.io.ByteArrayOutputStream
+import java.io.File
 import java.io.FileNotFoundException
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PublicFragment : Fragment()  , PostListener{
+class PublicFragment : Fragment()  , NewPostListener , View.OnClickListener{
 
     lateinit var binding: FragmentPublicBinding
-    private var preferenceManager: PreferenceManager? = null
-    lateinit var db: FirebaseFirestore
-    private var encodedImage: Uri? = null
-    lateinit var postAdpter: PostAdpter
-    val REQUEST_IMAGE_CAPTURE = 1
 
+
+
+    private lateinit var database: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
+    private lateinit var postStorageRef: StorageReference
+
+    private lateinit var userCollection: CollectionReference
+    private lateinit var publicPostCollection: CollectionReference
+    private lateinit var commentCollection: CollectionReference
+    private val newPostAdapter by lazy {
+        NewPostAdapter(requireContext(), mutableListOf(), loggedUserId, this , false)
+    }
+    private var loggedUserId: String = ""
+    private var clubName: String = ""
+    private var postImageUri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,240 +81,331 @@ class PublicFragment : Fragment()  , PostListener{
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentPublicBinding.inflate(inflater, container, false)
-        db = FirebaseFirestore.getInstance()
-        preferenceManager = PreferenceManager(activity)
-        var userId = preferenceManager!!.getString(Constants.KEY_USER_ID)
-        getAllPost(userId)
+        return binding.apply {
+            ibPickCamera.setOnClickListener(this@PublicFragment)
+            ibPost.setOnClickListener(this@PublicFragment)
+            ibPickGallery.setOnClickListener(this@PublicFragment)
+            ibRemoveImage.setOnClickListener(this@PublicFragment)
+            ivPostAuthorImage.setOnClickListener(this@PublicFragment)
 
-        //preferenceManager!!.getString(Constants.KEY_USER_ID)
-        binding.imageFromGallery.setOnClickListener { view ->
-            val intent =
-                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            pickImage.launch(intent)
-        }
-        binding.imageFromCamera.setOnClickListener { view ->
-            dispatchTakePictureIntent()
 
-        }
-
-        binding.imageSendPost.setOnClickListener(View.OnClickListener {
-            if (binding.txtWritePost.text.isEmpty()) {
-                binding.txtWritePost.setError("Enter your Post")
-            } else {
-                addPost(encodedImage, userId)
-                getAllPost(userId)
-            }
-        })
-
-        Picasso.get()
-            .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
-            .into(   binding.imageUserSendPost)
-        getTecaherInfo(userId)
-
-        binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
-
-        Log.e("imaggggepost" , preferenceManager!!.getString(Constants.KEY_IMAGE))
-
-        return binding.root
+        }.root
     }
-    fun  getTecaherInfo(userId: String){
-        db.collection(Constants.KEY_COLLECTION_TEACHER).document(userId).get().addOnSuccessListener { doc ->
-
-            var teacher = doc.toObject(User::class.java)
-            Log.e("imaggggepost2" , teacher!!.image.toString())
-            if (teacher.image != null) {
-                Picasso.get()
-                    .load(teacher.image)
-                    .resize(30,30)
-                    .centerCrop()
-                    .into(binding.imageUserSendPost)
-            }
-        }
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initData()
     }
 
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        } catch (e: ActivityNotFoundException) {
-            // display error state to the user
-        }
+    private fun initData() {
+        database = FirebaseFirestore.getInstance()
+        storage = FirebaseStorage.getInstance()
 
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            val imageBitmap = data?.extras?.get("data") as Bitmap
-
-            encodedImage = getImageUri(requireActivity(), imageBitmap)
-            if (encodedImage !=null) {
-                binding.imageForPost.visibility =View.VISIBLE
-                binding.imageForPost.setImageBitmap(imageBitmap)
-            }
-
-        }
-    }
-
-    fun getAllPost(userId: String) {
-
-        var data = ArrayList<Post>()
-        binding.progressBarPost.visibility = View.VISIBLE
-        data.clear()
-        db.collection("PublicPost")
-
-            .get().addOnSuccessListener { queryDocumentSnapshots ->
+        userCollection = database.collection(Constants.KEY_COLLECTION_USERS)
+        publicPostCollection = database.collection(Constants.KEY_COLLECTION_PUBLIC_POST)
+        commentCollection = database.collection(Constants.KEY_COLLECTION_COMMENT)
 
 
-                for (documentSnapshot in queryDocumentSnapshots) {
-                    val post: Post = documentSnapshot.toObject(Post::class.java)
-                    data.add(post)
+        postStorageRef = storage.reference.child(Constants.KEY_POSTS_STORAGE_REF)
+
+        loggedUserId = PreferenceManager(requireContext()).getString(Constants.KEY_USER_ID)
+
+        userCollection.document(loggedUserId)
+            .get().addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    Toast.makeText(requireContext(), "Error Logged User ID", Toast.LENGTH_SHORT)
+                        .show()
+                    requireActivity().onBackPressed()
                 }
-                postAdpter = PostAdpter(data, activity, userId , this , true)
-                binding.postTecRc.setAdapter(postAdpter)
-                postAdpter.notifyDataSetChanged()
-                binding.progressBarPost.visibility = View.GONE
-                binding.postTecRc.visibility = View.VISIBLE
+                val loggedUser = it.result.toObject(User::class.java)
+                initLoggedUserData(loggedUser)
+            }
 
-                Log.e("hin", data.size.toString() + "")
-                binding.postTecRc.setLayoutManager(LinearLayoutManager(activity))
+        publicPostCollection.orderBy("time", Query.Direction.DESCENDING)
+            .addSnapshotListener { snapshots, _ ->
+                snapshots?.documentChanges?.let {
+
+                    for (doc in it) {
+                        val newPost = doc.document.toObject(NewPost::class.java)
+
+                        Log.d("TAG", "initData: ${newPost.content}")
+                        Log.d("TAG", "initData:ggggggggg")
+                        when (doc.type) {
+                            DocumentChange.Type.ADDED -> onPostAdded(newPost)
+                            DocumentChange.Type.MODIFIED -> onPostModified(newPost)
+                            DocumentChange.Type.REMOVED -> onPostRemoved(newPost)
+                        }
+                    }
+                }
+
             }
-            .addOnFailureListener {
-                binding.progressBarPost.visibility = View.VISIBLE
-                binding.postTecRc.visibility = View.GONE
-            }
+        initPostsAdapter()
+
+
+    }
+
+    private fun initPostsAdapter() {
+        binding.rvPosts.adapter = newPostAdapter
     }
 
 
-    fun addPost(fileUri: Uri?, userId: String) {
-
-        binding.imageSendPost.isEnabled=false
-
-        if (fileUri != null) {
-            val fileName = UUID.randomUUID().toString() + ".jpg"
-            val refStorage = FirebaseStorage.getInstance().reference.child("images/$fileName")
-            refStorage.putFile(fileUri)
-                .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                    taskSnapshot.storage.downloadUrl.addOnSuccessListener {
-                        var imageUrl = it.toString()
+    private fun onPostAdded(newPost: NewPost) {
+        try {
 
 
-                        db.collection(Constants.KEY_COLLECTION_TEACHER)
-                            .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
-                            .get().addOnSuccessListener { doc ->
-
-                                var user = doc.toObject(User::class.java)!!
-
-                                var post: Post = Post()
-                                post.postDec = binding.txtWritePost.text.toString()
-                                post.postImage = imageUrl
-                                post.teacherName = user.name
-                                post.clubName = user.club
-                                post.numberOfNum = 0
-                                post.isLike = false
-                                //    post.teacherName = user.name
-                                post.teacherImage = user.image
-                                post.likeBy = ArrayList()
-                                val ref: DocumentReference = db.collection("PublicPost").document()
-                                post.postId = ref.id
-                                ref.set(post).addOnSuccessListener {
-                                    binding.txtWritePost.text.clear()
-                                    encodedImage = null
-                                    binding.imageForPost.setImageBitmap(null)
-                                    binding.imageForPost.visibility =View.GONE
-                                    binding.imageSendPost.isEnabled=true
-
-                                    getAllPost(userId)
-                                }
-
+            userCollection.document(newPost.authorDocId).get().addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    return@addOnCompleteListener
+                }
+                val data = it.result.toObject(User::class.java)
+                data?.let { author ->
+                    publicPostCollection.document(newPost.docId)
+                        .collection(Constants.KEY_COLLECTION_COMMENT)
+                        .get().addOnCompleteListener {
+                            if (!it.isSuccessful) {
+                                return@addOnCompleteListener
                             }
+                            val comments = it.result.toObjects(Comment::class.java)
+                            newPostAdapter.addPost(
+                                PostModelForAdapter(
+                                    author = author,
+                                    post = newPost,
+                                    comment = comments
+                                )
+                            )
+                            Log.d("TAG", "onPostAdded: ${comments.size}")
+
+                        }
+
+                }
+            }
+        }catch (e:Exception){}
+    }
 
 
-                    }
-                })
+    private fun onPostRemoved(newPost: NewPost) {
+        newPostAdapter.removePost(newPost)
 
-                .addOnFailureListener(OnFailureListener { e ->
-                    print(e.message)
-                })
+    }
+
+    private fun onPostModified(newPost: NewPost) {
+
+        newPostAdapter.updatePost(newPost)
+    }
+
+    private fun initLoggedUserData(loggedUser: User?) {
+        loggedUserId.let {
+            binding.tvPostAuthorName.text = loggedUser!!.name
+            clubName =loggedUser.club.toString()
+            if (loggedUser.image!!.isNotEmpty())
+                Picasso.get().load(loggedUser.image).into(binding.ivPostAuthorImage)
+
+        }
+
+    }
+
+    override fun onClick(p0: View?) {
+
+        when (p0) {
+            binding.ibPost -> onSendPostClick()
+            binding.ibPickCamera -> onClickPickCamera()
+            binding.ibPickGallery -> onClickPickGallery()
+            binding.ibRemoveImage -> onClickRemoveImage()
+        //    binding.ivPostAuthorImage ->goToMyProfile()
+        }
+    }
+
+
+    private fun onSendPostClick() {
+        val postText = binding.etPostContent.text.toString()
+
+        if (postText.isEmpty() && postImageUri == null) {
+            Toast.makeText(requireContext(), "Can't post empty", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val doc = publicPostCollection.document()
+
+        if (postImageUri != null) {
+            val imageName = "${doc.id}.png"
+            postStorageRef.child(imageName).putFile(postImageUri!!).addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Something wont wrong, please try again later !!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    return@addOnCompleteListener
+                }
+
+                postStorageRef.child(imageName).downloadUrl.addOnSuccessListener {
+                    sendMessage(doc, postText, it.toString())
+                }
+            }
 
 
         } else {
-            db.collection(Constants.KEY_COLLECTION_TEACHER)
-                .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
-                .get().addOnSuccessListener { doc ->
-
-                    var user = doc.toObject(User::class.java)!!
-
-                    var post: Post = Post()
-                    post.postDec = binding.txtWritePost.text.toString()
-                    post.postImage = ""
-                    post.teacherName = user.name
-                    post.clubName = user.club
-                    post.numberOfNum = 0
-                    post.isLike = false
-                    post.teacherImage =user.image
-                    post.likeBy = ArrayList()
-                    post.teacherImage = user.image
-
-                    val ref: DocumentReference = db.collection("PublicPost").document()
-                    post.postId = ref.id
-                    ref.set(post).addOnSuccessListener {
-                        binding.txtWritePost.text.clear()
-                        encodedImage = null
-                        binding.imageForPost.setImageBitmap(null)
-                        binding.imageForPost.visibility =View.GONE
-
-                        binding.imageSendPost.isEnabled=true
-
-                        getAllPost(userId)
-                    }
-
-                }
+            sendMessage(doc, postText, "")
         }
     }
 
+    private fun sendMessage(doc: DocumentReference, postText: String, imageUrl: String) {
 
-    private val pickImage = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result: ActivityResult ->
-        if (result.resultCode == AppCompatActivity.RESULT_OK) {
-            if (result.data != null) {
-                val imageUri = result.data!!.data
-                try {
-                    val inputStream = activity?.contentResolver?.openInputStream(imageUri!!)
-                    val bitmap = BitmapFactory.decodeStream(inputStream)
-                    //binding.imageProfile.setImageBitmap(bitmap)
-                    //       binding.textAddImage.visibility = View.GONE
-                    encodedImage = result.data!!.data!!
-                    if (encodedImage !=null) {
-                        binding.imageForPost.visibility =View.VISIBLE
-                        binding.imageForPost.setImageBitmap(bitmap)
-                    }
-                } catch (e: FileNotFoundException) {
-                    e.printStackTrace()
+        val post = NewPost(
+            docId = doc.id,
+            content = postText,
+            imageUrl = imageUrl,
+            authorDocId = loggedUserId ,
+            club =clubName
+
+        )
+
+        doc.set(post).addOnCompleteListener {
+            if (it.isSuccessful) {
+                Toast.makeText(requireContext(), "Post Successfully", Toast.LENGTH_SHORT).show()
+                clearPostView()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Something wont wrong, please try again later",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+    }
+
+    private fun clearPostView() {
+        binding.etPostContent.text.clear()
+        postImageUri = null
+        binding.cvImagePreview.visibility = View.GONE
+
+    }
+
+
+    private fun onClickPickCamera() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            activityResultLauncher.launch(Manifest.permission.CAMERA)
+        } else {
+            lifecycleScope.launchWhenStarted {
+                getTmpFileUri().let { uri ->
+                    postImageUri = uri
+                    takeImageResult.launch(uri)
                 }
             }
         }
     }
 
+    private fun onClickPickGallery() {
+        selectImageFromGalleryResult.launch("image/*")
 
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = MediaStore.Images.Media.insertImage(
-            inContext.getContentResolver(),
-            inImage,
-            "Title",
-            null
+    }
+
+    private fun onClickRemoveImage() {
+        changeImagePreviewVisibility(false)
+        postImageUri = null
+    }
+
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            // Handle Permission granted/rejected
+            if (isGranted) {
+                // Permission is granted
+                onClickPickCamera()
+            } else {
+                // Permission is denied
+                Toast.makeText(
+                    requireContext(),
+                    "Camera permission is required",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+
+    private val takeImageResult =
+        registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+            if (isSuccess) {
+                postImageUri?.let { uri ->
+                    changeImagePreviewVisibility(true)
+                    binding.ivPostImage.setImageURI(uri)
+                }
+            }
+        }
+
+
+    private val selectImageFromGalleryResult =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                changeImagePreviewVisibility(true)
+                postImageUri = it
+                binding.ivPostImage.setImageURI(it)
+            }
+        }
+
+    private fun getTmpFileUri(): Uri {
+        val tmpFile =
+            File.createTempFile("tmp_image_file", ".png", requireContext().cacheDir).apply {
+                createNewFile()
+                deleteOnExit()
+            }
+
+        return FileProvider.getUriForFile(
+            requireContext(),
+            "${BuildConfig.APPLICATION_ID}.provider",
+            tmpFile
         )
-        return Uri.parse(path)
     }
 
-    override fun onPostClicked(post: Post) {
+
+    private fun changeImagePreviewVisibility(status: Boolean) {
+        binding.cvImagePreview.visibility = if (status) View.VISIBLE else View.GONE
+    }
+
+    override fun onClickLike(post: NewPost) {
+
+        val isLike = post.likes.contains(loggedUserId)
+
+        if (isLike) {
+            post.likes.remove(loggedUserId)
+        } else {
+            post.likes.add(loggedUserId)
+        }
+
+        publicPostCollection.document(post.docId).set(post)
+    }
+
+    override fun onClickComment(post: NewPost) {
+        CommentsDialog.display(
+            fragmentManager = childFragmentManager,
+            postId = post.docId
+        )
 
     }
+
+    override fun onClickImage(post: NewPost) {
+        ImagePreviewDialog.display(
+            fragmentManager = childFragmentManager,
+            imageUrl = post.imageUrl
+        )    }
+
+    override fun onClickAuthor(author: User) {
+//        var intent = Intent(context  , ProfileActivity::class.java)
+//        intent.putExtra("userId" ,author.id)
+//        startActivity(intent)
+    }
+
+//    private  fun goToMyProfile(){
+//        var intent = Intent(activity, ProfileActivity::class.java)
+//        intent.putExtra("userId", loggedUserId)
+//        intent.putExtra("myProfile", true)
+//        startActivity(intent)
+//    }
+
 
 
 }

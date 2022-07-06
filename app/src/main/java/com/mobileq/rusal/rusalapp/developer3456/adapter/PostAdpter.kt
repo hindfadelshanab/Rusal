@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.mobileq.rusal.rusalapp.developer3456.ProfileActivity
 import com.mobileq.rusal.rusalapp.developer3456.R
 import com.mobileq.rusal.rusalapp.developer3456.listeners.PostListener
 import com.squareup.picasso.Callback
@@ -77,8 +78,14 @@ class PostAdpter(
                 })
 
         }
-        holder.itemView.setOnClickListener { view ->
+        holder.imageView.setOnClickListener { view ->
             postListener.onPostClicked(itemsViewModel)
+
+        }
+        holder.imageViewUserProfile.setOnClickListener { view ->
+           var intent = Intent(context  , ProfileActivity::class.java)
+            intent.putExtra("userId" , itemsViewModel.teacherId)
+            context!!.startActivity(intent)
 
         }
         holder.linearComment.setOnClickListener { view ->
@@ -92,7 +99,6 @@ class PostAdpter(
             .get()
             .load(itemsViewModel.teacherImage)
             .placeholder(R.drawable.ic__70076_account_avatar_client_male_person_icon)
-
             .error(R.drawable.ic__70076_account_avatar_client_male_person_icon)
             .into(holder.imageViewUserProfile)
 
@@ -134,8 +140,6 @@ class PostAdpter(
 
         holder.likeImage.setOnClickListener {
 
-            //usersLikePostList.add(userId)
-            // var newArray =
 
             if (!itemsViewModel.likeBy!!.contains(userId)) {
                 itemsViewModel.likeBy!!.add(userId);
@@ -149,6 +153,7 @@ class PostAdpter(
             post.postImage = itemsViewModel.postImage
             post.clubName = itemsViewModel.clubName
             post.teacherName = itemsViewModel.teacherName
+            post.teacherId = itemsViewModel.teacherId
             post.likeBy = itemsViewModel.likeBy
             post.isLike = true
             post.numberOfComment = itemsViewModel.numberOfComment

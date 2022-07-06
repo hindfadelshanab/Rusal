@@ -41,11 +41,14 @@ class ContackUsFragment : Fragment() {
 
         binding.layoutWhatsapp.setOnClickListener({
 
-            openWhatsApp(binding.txtWhatsappNo.text.toString(), binding.txtInputMessage.text.toString())
+            openWhatsApp(
+                binding.txtWhatsappNo.text.toString(),
+                binding.txtInputMessage.text.toString()
+            )
         })
         binding.layoutPhone.setOnClickListener({
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${binding.txtPhoneNo}")
+            intent.data = Uri.parse("tel:${binding.txtPhoneNo.text.toString()}")
             startActivity(intent)
         })
         return binding.root
@@ -57,6 +60,8 @@ class ContackUsFragment : Fragment() {
         message["Message"] = binding.txtInputMessage.text.toString()
         db.collection("Contacts").add(message).addOnSuccessListener { doc ->
             Toast.makeText(activity, "Message sent", Toast.LENGTH_LONG).show()
+            binding.txtInputEmail.text.clear()
+            binding.txtInputMessage.text.clear()
         }
     }
 
@@ -87,11 +92,12 @@ class ContackUsFragment : Fragment() {
             i.data = Uri.parse(url)
             if (i.resolveActivity(packageManager) != null) {
                 startActivity(i)
-            } else {     Toast.makeText(
-                activity,
-                "ERROR WHATSAPP",
-                Toast.LENGTH_SHORT
-            ).show()
+            } else {
+                Toast.makeText(
+                    activity,
+                    "ERROR WHATSAPP",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } catch (e: Exception) {
             Log.e("ERROR WHATSAPP", e.toString())

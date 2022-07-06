@@ -22,8 +22,6 @@ import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
@@ -111,103 +109,144 @@ class SignUpActivity : AppCompatActivity() {
                                     if (task.isSuccessful) {
                                         val currentUser: FirebaseUser? = mAuth.getCurrentUser()
                                         val userId = currentUser!!.uid.toString()
+
                                         var user: User = User()
                                         user.name = binding.inputName.text.toString()
                                         user.email = binding.inputEmail.text.toString()
-                                        user.accountType = accountType
                                         user.club = binding.clubSpinner.selectedItem.toString()
                                         user.image = imageUrl!!
                                         user.id = currentUser!!.uid.toString()
                                         Log.e("image" , "image url :${imageUrl}" )
-
-
-                                        if (accountType == "طالب") {
-                                            database.collection(Constants.KEY_COLLECTION_STUDENT).document(userId)
-                                                .set(user)
-                                                .addOnSuccessListener {
-                                                    loading(false)
-                                                    preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
-                                                    preferenceManager!!.putString(
-                                                        Constants.KEY_USER_ID,
-                                                        userId
-                                                    )
-                                                    preferenceManager!!.putString(
-                                                        Constants.KEY_NAME,
-                                                        binding.inputName.text.toString()
-                                                    )
-                                                    preferenceManager!!.putBoolean(
-                                                        Constants.KEY_IS_Student,
-                                                       true
-                                                    )
-                                                    preferenceManager!!.putBoolean(
-                                                        Constants.KEY_IS_Teacher,
-                                                       false
-                                                    )
-                                                    preferenceManager!!.putString(Constants.KEY_IMAGE, imageUrl)
-                                                    Log.e(TAG, "Sucees Student");
-
-                                                    Log.e("hind", "Sucees");
-                                                    Log.e("hind", userId);
-                                                    val intent =
-                                                        Intent(applicationContext, MainActivity::class.java)
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                    startActivity(intent)
-                                                }
-
-                                                .addOnFailureListener { e: Exception ->
-                                                    loading(false)
-                                                    showToast(e.message)
-
-                                                }
-
-                                        } else if (accountType == "معلم") {
-
-                                            database.collection(Constants.KEY_COLLECTION_TEACHER).document(userId)
-                                                .set(user)
-                                                .addOnSuccessListener {
-                                                    loading(false)
-                                                    preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
-                                                    preferenceManager!!.putString(
-                                                        Constants.KEY_USER_ID,
-                                                        userId
-                                                    )
-                                                    preferenceManager!!.putString(
-                                                        Constants.KEY_NAME,
-                                                        binding.inputName.text.toString()
-                                                    )
-                                                    preferenceManager!!.putBoolean(
-                                                        Constants.KEY_IS_Student,
-                                                        false
-                                                    )
-                                                    preferenceManager!!.putBoolean(
-                                                        Constants.KEY_IS_Teacher,
-                                                        true
-                                                    )
-                                                    preferenceManager!!.putString(Constants.KEY_IMAGE, imageUrl)
-                                                    Log.e(TAG, "Sucees teacher");
-
-                                                    Log.e("hind", "Sucees");
-                                                    Log.e("hind", userId);
-                                                    val intent =
-                                                        Intent(applicationContext, MainActivity2::class.java)
-                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                                    startActivity(intent)
-                                                }
-                                                .addOnFailureListener { e: Exception ->
-                                                    loading(false)
-                                                    showToast(e.message)
-
-                                                }
+                                        if (accountType.equals("طالب")){
+                                            user.accountType =Constants.KEY_ACCOUNT_TYPE_STUDENT
+                                        }else if (accountType.equals("معلم")){
+                                            user.accountType =Constants.KEY_ACCOUNT_TYPE_TEACHER
                                         }
+                                        database.collection(Constants.KEY_COLLECTION_USERS).document(userId)
+                                            .set(user)
+                                            .addOnSuccessListener {
+                                                loading(false)
+                                                preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
+                                                preferenceManager!!.putString(
+                                                    Constants.KEY_USER_ID,
+                                                    userId
+                                                )
+                                                preferenceManager!!.putString(
+                                                    Constants.KEY_NAME,
+                                                    binding.inputName.text.toString()
+                                                )
+                                                preferenceManager!!.putBoolean(
+                                                    Constants.KEY_IS_Student,
+                                                    false
+                                                )
+                                                preferenceManager!!.putBoolean(
+                                                    Constants.KEY_IS_Teacher,
+                                                    true
+                                                )
+                                                preferenceManager!!.putString(Constants.KEY_IMAGE, imageUrl)
+                                                Log.e(TAG, "Sucees teacher");
+
+                                                Log.e("hind", "Sucees");
+                                                Log.e("hind", userId);
+                                                val intent =
+                                                    Intent(applicationContext, MainActivity2::class.java)
+                                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                                startActivity(intent)
+                                            }
+                                            .addOnFailureListener { e: Exception ->
+                                                loading(false)
+                                                showToast(e.message)
+
+                                            }
+//
+//                                        if (accountType == "طالب") {
+//                                            database.collection(Constants.KEY_COLLECTION_STUDENT).document(userId)
+//                                                .set(user)
+//                                                .addOnSuccessListener {
+//                                                    loading(false)
+//                                                    preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
+//                                                    preferenceManager!!.putString(
+//                                                        Constants.KEY_USER_ID,
+//                                                        userId
+//                                                    )
+//                                                    preferenceManager!!.putString(
+//                                                        Constants.KEY_NAME,
+//                                                        binding.inputName.text.toString()
+//                                                    )
+//                                                    preferenceManager!!.putBoolean(
+//                                                        Constants.KEY_IS_Student,
+//                                                       true
+//                                                    )
+//                                                    preferenceManager!!.putBoolean(
+//                                                        Constants.KEY_IS_Teacher,
+//                                                       false
+//                                                    )
+//                                                    preferenceManager!!.putString(Constants.KEY_IMAGE, imageUrl)
+//                                                    Log.e(TAG, "Sucees Student");
+//
+//                                                    Log.e("hind", "Sucees");
+//                                                    Log.e("hind", userId);
+//                                                    val intent =
+//                                                        Intent(applicationContext, MainActivity::class.java)
+//                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                                    startActivity(intent)
+//                                                }
+//
+//                                                .addOnFailureListener { e: Exception ->
+//                                                    loading(false)
+//                                                    showToast(e.message)
+//
+//                                                }
+//
+//                                        } else if (accountType == "معلم") {
+//
+//                                            database.collection(Constants.KEY_COLLECTION_TEACHER).document(userId)
+//                                                .set(user)
+//                                                .addOnSuccessListener {
+//                                                    loading(false)
+//                                                    preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
+//                                                    preferenceManager!!.putString(
+//                                                        Constants.KEY_USER_ID,
+//                                                        userId
+//                                                    )
+//                                                    preferenceManager!!.putString(
+//                                                        Constants.KEY_NAME,
+//                                                        binding.inputName.text.toString()
+//                                                    )
+//                                                    preferenceManager!!.putBoolean(
+//                                                        Constants.KEY_IS_Student,
+//                                                        false
+//                                                    )
+//                                                    preferenceManager!!.putBoolean(
+//                                                        Constants.KEY_IS_Teacher,
+//                                                        true
+//                                                    )
+//                                                    preferenceManager!!.putString(Constants.KEY_IMAGE, imageUrl)
+//                                                    Log.e(TAG, "Sucees teacher");
+//
+//                                                    Log.e("hind", "Sucees");
+//                                                    Log.e("hind", userId);
+//                                                    val intent =
+//                                                        Intent(applicationContext, MainActivity2::class.java)
+//                                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                                    startActivity(intent)
+//                                                }
+//                                                .addOnFailureListener { e: Exception ->
+//                                                    loading(false)
+//                                                    showToast(e.message)
+//
+//                                                }
+//                                        }
 
                                     } else {
                                         // If sign in fails, display a message to the user.
 
                                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
                                         Toast.makeText(
-                                            this, "Authentication failed.",
+                                            this, "Authentication failed ${task.exception}",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                        loading(false)
 
                                     }
                                 })
@@ -218,6 +257,8 @@ class SignUpActivity : AppCompatActivity() {
 
                 .addOnFailureListener(OnFailureListener { e ->
                     print(e.message)
+                    loading(false)
+
                 })
         }
 

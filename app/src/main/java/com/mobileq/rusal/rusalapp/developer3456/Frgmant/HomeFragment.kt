@@ -30,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.mobileq.rusal.rusalapp.developer3456.BuildConfig
 import com.mobileq.rusal.rusalapp.developer3456.PostDetailsActivity
+import com.mobileq.rusal.rusalapp.developer3456.ProfileActivity
 import com.mobileq.rusal.rusalapp.developer3456.adapter.PostAdpter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentHomeBinding
 import com.mobileq.rusal.rusalapp.developer3456.listeners.PostListener
@@ -66,36 +67,13 @@ class HomeFragment : Fragment(), PostListener {
 
         var userId = preferenceManager!!.getString(Constants.KEY_USER_ID)
         binding.imageFromGallery.setOnClickListener { view ->
-//            val intent =
-//                Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            //         pickImage.launch(intent)
             selectImageFromGallery()
         }
         binding.imageFromCamera.setOnClickListener { view ->
             takeImage()
-
-
         }
 
-//        binding.txtWritePost.addTextChangedListener { charSequence  ->
-//            if (charSequence !=null){
-//                binding.imageSendPost.visibility=View.VISIBLE
-//
-//                binding.imageSendPost.setOnClickListener(View.OnClickListener {
-//                    if (binding.txtWritePost.text.isEmpty()) {
-//                        binding.txtWritePost.setError("Enter your Post")
-//                    } else {
-//                        addPost(encodedImage, userId)
-//                        getAllPost(userId)
-//                    }
-//                })
-//            }else{
-//                binding.imageSendPost.visibility=View.GONE
-//
-//            }
-//
-//        }
+
         binding.imageSendPost.setOnClickListener(View.OnClickListener {
             if (binding.txtWritePost.text.isEmpty()) {
                 binding.txtWritePost.setError("Enter your Post")
@@ -109,6 +87,17 @@ class HomeFragment : Fragment(), PostListener {
         Picasso.get()
             .load(preferenceManager!!.getString(Constants.KEY_IMAGE))
             .into(binding.imageUserSendPost)
+
+        binding.imageUserSendPost.setOnClickListener {
+
+            var intent = Intent(activity, ProfileActivity::class.java)
+            intent.putExtra("userId", userId)
+            intent.putExtra("myProfile", true)
+            startActivity(intent)
+
+        }
+        binding.txtNameUserSendPost.setText(preferenceManager!!.getString(Constants.KEY_NAME))
+
         return binding.root
     }
 
@@ -125,9 +114,9 @@ class HomeFragment : Fragment(), PostListener {
                     .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
                         for (documentSnapshotpost in queryDocumentSnapshots) {
                             post = documentSnapshotpost.toObject(Post::class.java)
-                            if (post.clubName.equals(student.club)) {
+                           // if (post.clubName.equals(student.club)) {
                                 data.add(post)
-                            }
+                           // }
 
                         }
                         binding.progressBarPost.visibility = View.GONE
@@ -175,6 +164,7 @@ class HomeFragment : Fragment(), PostListener {
                                 post.clubName = user.club
                                 post.numberOfNum = 0
                                 post.numberOfComment = 0
+                                post.teacherId = user.id
                                 post.isLike = false
                                 post.teacherImage = user.image
                                 post.likeBy = ArrayList()
@@ -218,6 +208,7 @@ class HomeFragment : Fragment(), PostListener {
                     post.teacherImage = user.image
                     post.likeBy = ArrayList()
                     post.teacherImage = user.image
+                    post.teacherId = user.id
 
                     val ref: DocumentReference = db.collection("Post").document()
                     post.postId = ref.id

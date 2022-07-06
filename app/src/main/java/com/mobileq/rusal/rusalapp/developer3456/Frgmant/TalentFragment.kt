@@ -45,7 +45,7 @@ class TalentFragment : Fragment() {
 
 
     fun getUserInfo(userId: String) {
-        db.collection(Constants.KEY_COLLECTION_STUDENT).document(userId).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(userId).get()
             .addOnSuccessListener { doc ->
                 student = doc.toObject(User::class.java)!!
 

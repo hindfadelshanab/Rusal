@@ -5,13 +5,20 @@ import java.util.HashMap;
 public class Constants {
 
     public static final String KEY_COLLECTION_STUDENT = "student";
+    public static final String KEY_COLLECTION_POST = "Post";
+    public static final String KEY_COLLECTION_PUBLIC_POST = "PublicPost" ;
+
+    public static final String KEY_COLLECTION_COMMENT = "Comment";
     public static final String KEY_COLLECTION_TALENT = "Talent";
     public static final String KEY_COLLECTION_TEACHER = "teacher";
-    public static final String KEY_COLLECTION_CITY = "City";
+    public static final String KEY_COLLECTION_USERS = "Users";
+    public static final String KEY_POST_DOC_ID = "post_doc_id";
+    public static final String KEY_IMAGE_PREVIEW_URL = "image_preview_url";
+
+    public static final String KEY_POSTS_STORAGE_REF = "posts";
+    public static final Integer KEY_ACCOUNT_TYPE_STUDENT = 0;
+    public static final Integer KEY_ACCOUNT_TYPE_TEACHER = 1;
     public static final String KEY_NAME = "name";
-    public static final String KEY_CITY_NAME = "cityName";
-    public static final String KEY_CITY_LAT = "lat";
-    public static final String KEY_CITY_LNG = "lng";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_CLUB = "club";
     public static final String KEY_ACCOUNT_TYPE = "accountType";

@@ -89,13 +89,13 @@ class MessageAdpter(
         fun setData(chatMessage: Message) {
             binding.textMessage.setText(chatMessage.message)
             binding.textDateTime.setText(chatMessage.dateTime)
-
+            binding.txtReceivedName.setText(chatMessage.senderName);
             if (chatMessage.users !=null) {
 
-                for (u in chatMessage.users!!) {
+             //   for (u in chatMessage.users!!) {
                     //if (chatMessage.receiverId)
-                    binding.txtReceivedName.setText(u.name);
-                }
+
+          //      }
             }
             if (chatMessage.messageImage != null) {
                 if (!chatMessage.messageImage.equals("")) {

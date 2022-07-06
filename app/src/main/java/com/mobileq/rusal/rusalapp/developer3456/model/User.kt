@@ -2,8 +2,8 @@ package com.mobileq.rusal.rusalapp.developer3456.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.google.firebase.firestore.DocumentId
-class User (
+
+class User(
 
 
     var id: String? = null,
@@ -11,7 +11,7 @@ class User (
     var image: String? = null,
     var email: String? = null,
     var club: String? = null,
-    var accountType: String? = null,
+    var accountType: Int? = null,
 
 
     ): Parcelable {
@@ -21,7 +21,7 @@ class User (
         parcel.readString(),
         parcel.readString(),
         parcel.readString(),
-        parcel.readString()
+        parcel.readInt()
     ) {
     }
 
@@ -31,7 +31,7 @@ class User (
         parcel.writeString(image)
         parcel.writeString(email)
         parcel.writeString(club)
-        parcel.writeString(accountType)
+        parcel.writeInt(accountType!!)
     }
 
     override fun describeContents(): Int {

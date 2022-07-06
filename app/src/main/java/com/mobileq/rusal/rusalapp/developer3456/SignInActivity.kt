@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.mobileq.rusal.rusalapp.developer3456.databinding.ActivitySignInBinding
+import com.mobileq.rusal.rusalapp.developer3456.model.User
 import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
 import com.mobileq.rusal.rusalapp.developer3456.utilites.PreferenceManager
 
@@ -86,16 +87,9 @@ class SignInActivity : AppCompatActivity() {
         mAuth.signInWithEmailAndPassword(binding.inputEmail.text.toString(), binding.inputPassword.text.toString())
             .addOnCompleteListener(this) { task ->
              if (task.isSuccessful) {
-                 var userId= mAuth.currentUser!!.uid.toString();
-//                    // Sign in success, update UI with the signed-in user's information
-//                    Log.d(TAG, "signInWithEmail:success")
-//                    val user = mAuth.currentUser
-//
-////                    Log.e("ErrorSSs" , preferenceManager!!.getString(Constants.KEY_USER_ID))
-//
-//                    Log.e("ErrorSSs" , user!!.uid +"uiiiiiiiid")
-//
-                 database.collection(Constants.KEY_COLLECTION_STUDENT).document(mAuth.currentUser!!.uid.toString())
+                 val userId= mAuth.currentUser!!.uid.toString();
+
+                 database.collection(Constants.KEY_COLLECTION_USERS).document(mAuth.currentUser!!.uid.toString())
                      .get()
                         .addOnFailureListener(){ e:Exception  ->
                             showToast("fail" + e.message)
@@ -104,6 +98,7 @@ class SignInActivity : AppCompatActivity() {
                      .addOnSuccessListener { doc ->
                          if(doc.data !=null){
                              showToast("Yes Student")
+                             val user = doc.toObject(User::class.java)
                              preferenceManager!!.putString(Constants.KEY_USER_ID,userId )
 
                                 preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
@@ -112,77 +107,90 @@ class SignInActivity : AppCompatActivity() {
                                     Constants.KEY_NAME,
                                     doc.getString(Constants.KEY_NAME)
                                 )
-                             preferenceManager!!.putBoolean(
-                                 Constants.KEY_IS_Student,
-                                 true
-                             )
-                             preferenceManager!!.putBoolean(
-                                 Constants.KEY_IS_Teacher,
-                                 false
-                             )
+                             if (user!!.accountType ==Constants.KEY_ACCOUNT_TYPE_STUDENT) {
+                                 preferenceManager!!.putBoolean(
+                                     Constants.KEY_IS_Student,
+                                     true
+                                 )
+                                 preferenceManager!!.putBoolean(
+                                     Constants.KEY_IS_Teacher,
+                                     false
+                                 )
+
+                                 val intent = Intent(applicationContext, MainActivity::class.java)
+                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                 startActivity(intent)
+                             }else  if (user.accountType ==Constants.KEY_ACCOUNT_TYPE_TEACHER) {
+                                 preferenceManager!!.putBoolean(
+                                     Constants.KEY_IS_Student,
+                                     false
+                                 )
+                                 preferenceManager!!.putBoolean(
+                                     Constants.KEY_IS_Teacher,
+                                     true
+                                 )
+                                 val intent = Intent(applicationContext, MainActivity2::class.java)
+                                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                 startActivity(intent)
+                             }
+
                                 preferenceManager!!.putString(
                                     Constants.KEY_IMAGE,
                                     doc.getString(Constants.KEY_IMAGE)
                                 )
-                                val intent = Intent(applicationContext, MainActivity::class.java)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                startActivity(intent)
+
+                             }
 
 
-
-//                            } else {
+//                         }else if (doc.data ==null){
+//                             database.collection(Constants.KEY_COLLECTION_TEACHER).document(mAuth.currentUser!!.uid.toString())
+//                                 .get()
+//                                 .addOnFailureListener(){ e:Exception  ->
+//                                     showToast("fail" + e.message)
 //
-//                            }
-
-                         }else if (doc.data ==null){
-                             database.collection(Constants.KEY_COLLECTION_TEACHER).document(mAuth.currentUser!!.uid.toString())
-                                 .get()
-                                 .addOnFailureListener(){ e:Exception  ->
-                                     showToast("fail" + e.message)
-
-                                 }
-                                 .addOnSuccessListener { doc ->
-
-                                     if(doc.data !=null){
-                                         showToast("Yes teacher")
-
-                                         preferenceManager!!.putString(Constants.KEY_USER_ID,userId )
-
-                                         preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
-
-                                         preferenceManager!!.putString(
-                                             Constants.KEY_NAME,
-                                             doc.getString(Constants.KEY_NAME)
-                                         )
-                                         preferenceManager!!.putBoolean(
-                                             Constants.KEY_IS_Student,
-                                             false
-                                         )
-                                         preferenceManager!!.putBoolean(
-                                             Constants.KEY_IS_Teacher,
-                                             true
-                                         )
-                                         preferenceManager!!.putString(
-                                             Constants.KEY_IMAGE,
-                                             doc.getString(Constants.KEY_IMAGE)
-                                         )
-                                         val intent = Intent(applicationContext, MainActivity2::class.java)
-                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                         startActivity(intent)
-
-                                     }else{
-                                         showToast("No teacher")
-
-                                     }
-
-                                 }
-                         }
-
-                         else{
-                             showToast("No Student")
-              //               loading(false)
-//                                showToast("Unable to sign in")
-                         }
+//                                 }
+//                                 .addOnSuccessListener { doc ->
+//
+//                                     if(doc.data !=null){
+//                                         showToast("Yes teacher")
+//
+//                                         preferenceManager!!.putString(Constants.KEY_USER_ID,userId )
+//
+//                                         preferenceManager!!.putBoolean(Constants.KEY_IS_SIGNED_IN, true)
+//
+//                                         preferenceManager!!.putString(
+//                                             Constants.KEY_NAME,
+//                                             doc.getString(Constants.KEY_NAME)
+//                                         )
+//                                         preferenceManager!!.putBoolean(
+//                                             Constants.KEY_IS_Student,
+//                                             false
+//                                         )
+//                                         preferenceManager!!.putBoolean(
+//                                             Constants.KEY_IS_Teacher,
+//                                             true
+//                                         )
+//                                         preferenceManager!!.putString(
+//                                             Constants.KEY_IMAGE,
+//                                             doc.getString(Constants.KEY_IMAGE)
+//                                         )
+//                                         val intent = Intent(applicationContext, MainActivity2::class.java)
+//                                         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                         startActivity(intent)
+//
+//                                     }else{
+//                                         showToast("No teacher")
+//
+//                                     }
+//
+//                                 }
+//                         }
+//
+//                         else{
+//                             showToast("No Student")
+//              //               loading(false)
+////                                showToast("Unable to sign in")
+//                         }
 
                      }
 

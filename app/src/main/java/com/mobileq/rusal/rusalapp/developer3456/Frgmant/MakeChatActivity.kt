@@ -4,22 +4,20 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.mobileq.rusal.rusalapp.developer3456.ChatActivity
 import com.mobileq.rusal.rusalapp.developer3456.adapter.UserAdpter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.ActivityMakeChatBinding
 import com.mobileq.rusal.rusalapp.developer3456.listeners.UserListener
-import com.mobileq.rusal.rusalapp.developer3456.model.Chat
 import com.mobileq.rusal.rusalapp.developer3456.model.User
 import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
 import com.mobileq.rusal.rusalapp.developer3456.utilites.PreferenceManager
+import java.util.*
 
 class MakeChatActivity : AppCompatActivity() ,UserListener {
     var isExites :Boolean =false
@@ -50,20 +48,24 @@ class MakeChatActivity : AppCompatActivity() ,UserListener {
         }
 
         binding.clubName.text =studentClub
-
-        if (isStudent) {
-            db.collection(Constants.KEY_COLLECTION_STUDENT)
-                .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
-                .get().addOnSuccessListener { doc ->
-                    currentStudent = doc.toObject(User::class.java)!!
-                }
-        }else{
-            db.collection(Constants.KEY_COLLECTION_TEACHER)
-                .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
-                .get().addOnSuccessListener { doc ->
-                    currentStudent = doc.toObject(User::class.java)!!
-                }
-        }
+        db.collection(Constants.KEY_COLLECTION_USERS)
+            .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
+            .get().addOnSuccessListener { doc ->
+                currentStudent = doc.toObject(User::class.java)!!
+            }
+//        if (isStudent) {
+//            db.collection(Constants.KEY_COLLECTION_STUDENT)
+//                .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
+//                .get().addOnSuccessListener { doc ->
+//                    currentStudent = doc.toObject(User::class.java)!!
+//                }
+//        }else{
+//            db.collection(Constants.KEY_COLLECTION_USERS)
+//                .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
+//                .get().addOnSuccessListener { doc ->
+//                    currentStudent = doc.toObject(User::class.java)!!
+//                }
+//        }
 
         setContentView(binding.root)
     }
@@ -74,7 +76,7 @@ class MakeChatActivity : AppCompatActivity() ,UserListener {
     //    Toast.makeText(this , userClub ,Toast.LENGTH_LONG).show()
 
         var data = ArrayList<User>()
-        db.collection(Constants.KEY_COLLECTION_TEACHER).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).get()
             .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
                 for (documentSnapshotpost in queryDocumentSnapshots) {
                     var teacher = documentSnapshotpost.toObject(User::class.java)
@@ -98,27 +100,6 @@ class MakeChatActivity : AppCompatActivity() ,UserListener {
                 Log.e("hind", e.message!!)
             })
 
-        db.collection(Constants.KEY_COLLECTION_STUDENT).get()
-            .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
-                for (documentSnapshotpost in queryDocumentSnapshots) {
-                    var student = documentSnapshotpost.toObject(User::class.java)
-                    if (student.club.equals(userClub)) {
-                        data.add(student)
-
-                    }
-
-                }
-
-                binding.progressBar.visibility = View.GONE
-                binding.usersRc.visibility = View.VISIBLE
-                userAdpter = UserAdpter(data , this)
-                binding.usersRc.setAdapter(userAdpter)
-                Log.e("hin", data.size.toString() + "")
-                binding.usersRc.setLayoutManager(LinearLayoutManager(this))
-            }).addOnFailureListener(OnFailureListener { e ->
-                Log.e("hind", e.message!!)
-                binding.progressBar.visibility=View.VISIBLE
-            })
 
         return data
     }
@@ -145,14 +126,14 @@ class MakeChatActivity : AppCompatActivity() ,UserListener {
 //
 //                })
 //        }else{
-//            db.collection(Constants.KEY_COLLECTION_TEACHER)
+//            db.collection(Constants.KEY_COLLECTION_USERS)
 //                .document(userId)
 //                .get().addOnSuccessListener { doc ->
 //                    currentStudent = doc.toObject(User::class.java)!!
 //                }
 //        }
 //
-//        db.collection(Constants.KEY_COLLECTION_TEACHER).get()
+//        db.collection(Constants.KEY_COLLECTION_USERS).get()
 //            .addOnSuccessListener(OnSuccessListener<QuerySnapshot> { queryDocumentSnapshots ->
 //                for (documentSnapshotpost in queryDocumentSnapshots) {
 //                   var teacher = documentSnapshotpost.toObject(User::class.java)

@@ -1,216 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
+    android:layout_height="match_parent">
 
-
-
-    <LinearLayout android:layout_width="match_parent"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/materialCardView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".teacherFragment.HomeTeacherFragment">
+        android:layout_margin="@dimen/_8sdp"
+        android:layout_marginHorizontal="@dimen/_16sdp"
+        app:cardCornerRadius="@dimen/_8sdp"
+        app:cardElevation="@dimen/_8sdp"
 
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="#838383"
+        app:strokeWidth="1dp">
 
-        <!--    <androidx.cardview.widget.CardView-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        android:layout_marginTop="@dimen/_24ssp"-->
-        <!--        android:layout_marginStart="@dimen/_16sdp"-->
-        <!--        android:layout_marginEnd="@dimen/_16sdp"-->
-
-        <!--        >-->
-        <!--        <TextView-->
-        <!--            android:id="@+id/tech_club_name"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:text="نادي الاعلام"-->
-        <!--            android:textSize="@dimen/_22ssp"-->
-        <!--            android:textAlignment="center"-->
-        <!--            android:padding="@dimen/_4sdp"-->
-        <!--            android:textColor="@color/mainColor"-->
-
-        <!--            />-->
-        <!--    </androidx.cardview.widget.CardView>-->
-
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="@dimen/_8sdp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="match_parent">
 
-            android:background="@drawable/edit_background"
-            android:layout_marginEnd="@dimen/_16sdp"
-            android:padding="@dimen/_4sdp"
-            android:layout_marginStart="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_12sdp"
-            >
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivPostAuthorImage"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_4sdp"
+                android:background="@drawable/background_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_oval="true" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+
+            <TextView
+                android:id="@+id/tvPostAuthorName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_gravity="fill_horizontal"
-                >
-
-                <ImageView
-                    android:id="@+id/image_send_post"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:src="@drawable/ic_baseline_send_24"
-                    android:rotation="210"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="@dimen/_4sdp"
+                android:layout_marginStart="8dp"
+                android:textAlignment="viewEnd"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_16ssp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/ivPostAuthorImage"
+                app:layout_constraintTop_toTopOf="@+id/ivPostAuthorImage"
+                tools:text="Username" />
 
 
+            <ImageButton
+                android:id="@+id/ibPost"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_margin="@dimen/_4sdp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_baseline_send_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                    />
-                <TextView
-                    android:id="@+id/txt_name_User_send_Post"
+            <ImageButton
+                android:id="@+id/ibPickCamera"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/camera"
+                app:layout_constraintEnd_toEndOf="@+id/ibPost"
+                app:layout_constraintTop_toTopOf="@+id/ibPickGallery" />
+
+            <ImageButton
+                android:id="@+id/ibPickGallery"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:padding="@dimen/_8sdp"
+                android:src="@drawable/gallery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ibPickCamera"
+                app:layout_constraintTop_toTopOf="@+id/etPostContent"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                android:id="@+id/etPostContent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:hint="Write post ..."
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ibPickGallery"
+                app:layout_constraintStart_toStartOf="@+id/ivPostAuthorImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivPostAuthorImage"
+                app:layout_constraintVertical_bias="0.0"
+                tools:text="dfoi jkg ngjkerng gkjnenge emnrjk gjine dfoi jkg ngjkerng gkjnenge jgknje dfoi jkg ngjkerng gkjnenge" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvImagePreview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:cardCornerRadius="@dimen/_4sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="@+id/etPostContent"
+                app:layout_constraintTop_toBottomOf="@+id/etPostContent">
+
+                <ImageButton
+                    android:id="@+id/ibRemoveImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="هند ابوشنب"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:textSize="@dimen/_16ssp"
-                    android:textAlignment="viewEnd"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
-                    android:layout_weight="2"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_marginEnd="@dimen/_1sdp"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/app_name"
 
-                    />
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/image_User_send_Post"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
-                    android:background="@drawable/background_image"
-                    android:layout_marginEnd="@dimen/_16sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:scaleType="centerCrop"
-                    app:riv_oval="true"
-
-                    />
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/_8sdp"
-                android:gravity="center"
-
-                >
+                    android:padding="@dimen/_4sdp"
+                    android:src="@drawable/ic_close_24px"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
                 <ImageView
-                    android:id="@+id/image_from_camera"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/camera"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginStart="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:id="@+id/ivPostImage"
+                    android:layout_width="@dimen/_80sdp"
+                    android:layout_height="@dimen/_80sdp"
+                    android:layout_margin="@dimen/_16sdp"
+                    app:srcCompat="@drawable/rosal_logo" />
+            </androidx.cardview.widget.CardView>
 
 
-                    />
-                <ImageView
-                    android:id="@+id/image_from_gallery"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/gallery"
-                    android:layout_marginEnd="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 
-                    />
-                <EditText
-                    android:id="@+id/txt_write_post"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/_12sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
-                    android:textColor="@color/black"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPosts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="@dimen/_8sdp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/materialCardView"
+        tools:listitem="@layout/post_item" />
 
-                    android:hint="عرف المحتوى"
-                    android:background="@color/white"
-
-
-                    />
-            </LinearLayout>
-
-
-
-            <ImageView
-                android:id="@+id/image_for_post"
-                android:layout_width="match_parent"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_marginBottom="@dimen/_8sdp"
-                android:layout_height="@dimen/_100sdp"
-                android:scaleType="fitXY"
-                android:visibility="gone"
-                android:src="@drawable/ic_launcher_background"
-                android:layout_gravity="center"
-
-                />
-
-
-
-
-        </LinearLayout>
-
-        <!--    <LinearLayout-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:gravity="end"-->
-        <!--        android:layout_marginTop="@dimen/_12sdp"-->
-        <!--        android:layout_height="wrap_content">-->
-
-        <!--        <TextView-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="@dimen/_32sdp"-->
-
-        <!--            android:textSize="@dimen/_18ssp"-->
-        <!--            android:padding="@dimen/_4sdp"-->
-
-
-        <!--            android:text="أضف الى منشورك"-->
-        <!--            />-->
-
-        <!--</LinearLayout>-->
-
-        <!--    <LinearLayout-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-
-        <!--        />-->
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/postTecRc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/post_item"
-            android:visibility="gone"
-
-
-            />
-        <ProgressBar
-            android:id="@+id/progressBarPost"
-            android:layout_width="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/_46sdp"
-            android:layout_height="wrap_content"
-
-            />
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

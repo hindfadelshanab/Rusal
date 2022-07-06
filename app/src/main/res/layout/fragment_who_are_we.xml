@@ -22,11 +22,12 @@
         android:paddingStart="@dimen/_24sdp"
         android:paddingEnd="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_16ssp"
-        android:textAlignment="viewEnd"
+        android:textAlignment="center"
         android:textColor="@color/black"
         android:lineHeight="@dimen/_35sdp"
         android:textSize="@dimen/_16ssp"
 
         />
+
 
 </LinearLayout>

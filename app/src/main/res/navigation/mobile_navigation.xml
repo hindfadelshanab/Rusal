@@ -6,7 +6,7 @@
     app:startDestination="@id/nav_home">
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.mobileq.rusal.rusalapp.developer3456.Frgmant.HomeFragment"
+        android:name="com.mobileq.rusal.rusalapp.developer3456.home_feature.NewHomeFragment"
         android:label="الرئيسية" />
     <fragment
         android:id="@+id/nav_contact"

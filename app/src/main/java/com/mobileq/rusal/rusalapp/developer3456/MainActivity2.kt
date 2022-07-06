@@ -43,6 +43,7 @@ class MainActivity2 : AppCompatActivity() {
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main2)
         getTeacherInfo(preferenceManager!!.getString(Constants.KEY_USER_ID))
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home2 ,R.id.nav_student_talent  ,R.id.nav_public,
@@ -76,7 +77,7 @@ class MainActivity2 : AppCompatActivity() {
     }
 
     fun goToChat() {
-        db.collection(Constants.KEY_COLLECTION_TEACHER).document(preferenceManager!!.getString(Constants.KEY_USER_ID)).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(preferenceManager!!.getString(Constants.KEY_USER_ID)).get()
             .addOnSuccessListener { doc ->
                 var student = doc.toObject(User::class.java)!!
 
@@ -92,7 +93,7 @@ class MainActivity2 : AppCompatActivity() {
 
     fun getTeacherInfo(teacherId: String) {
 
-        db.collection(Constants.KEY_COLLECTION_TEACHER).document(teacherId).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(teacherId).get()
             .addOnSuccessListener { doc ->
                 var student = doc.toObject(User::class.java)!!
                 var studentImage =
@@ -100,9 +101,9 @@ class MainActivity2 : AppCompatActivity() {
                 var studentName =
                     binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentName)
                 studentName.text = student.name
-                var studentEmail=
-                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
-                studentEmail.text = student.email
+//                var studentEmail=
+//                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
+              //  studentEmail.text = student.email
                 Picasso.get()
                     .load(student.image)
                     .into(studentImage)

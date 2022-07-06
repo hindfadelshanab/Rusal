@@ -98,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
     fun goToChat() {
       //  preferenceManager!!.putString(Constants.KEY_Chat_ID ,"")
-        db.collection(Constants.KEY_COLLECTION_STUDENT).document(preferenceManager!!.getString(Constants.KEY_USER_ID)).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(preferenceManager!!.getString(Constants.KEY_USER_ID)).get()
             .addOnSuccessListener { doc ->
                 var student = doc.toObject(User::class.java)!!
 
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
     fun getStudentInfo(studentId: String) {
 
-        db.collection(Constants.KEY_COLLECTION_STUDENT).document(studentId).get()
+        db.collection(Constants.KEY_COLLECTION_USERS).document(studentId).get()
             .addOnSuccessListener { doc ->
                var student = doc.toObject(User::class.java)!!
                 var studentImage =
@@ -122,9 +122,9 @@ class MainActivity : AppCompatActivity() {
                 var studentName =
                     binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentName)
                 studentName.text = student.name
-                var studentEmail=
-                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
-                studentEmail.text = student.email
+//                var studentEmail=
+//                    binding.drawerLayout.findViewById<TextView>(R.id.txtDrawaerStudentEmail)
+//                studentEmail.text = student.email
                 Picasso.get()
                     .load(student.image)
                     .into(studentImage)

@@ -10,11 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import com.mobileq.rusal.rusalapp.developer3456.R
-import com.mobileq.rusal.rusalapp.developer3456.adapter.PostAdpter
 import com.mobileq.rusal.rusalapp.developer3456.adapter.TalentAdpter
 import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentStudentTalentBinding
-import com.mobileq.rusal.rusalapp.developer3456.databinding.FragmentTalentBinding
 import com.mobileq.rusal.rusalapp.developer3456.model.Talent
 import com.mobileq.rusal.rusalapp.developer3456.model.User
 import com.mobileq.rusal.rusalapp.developer3456.utilites.Constants
@@ -44,7 +41,7 @@ class StudentTalentFragment : Fragment() {
 
     fun getAllTslent() {
          var teacher :User =User()
-        db.collection(Constants.KEY_COLLECTION_TEACHER)
+        db.collection(Constants.KEY_COLLECTION_USERS)
             .document(preferenceManager!!.getString(Constants.KEY_USER_ID))
             .get().addOnSuccessListener { doc ->
                 teacher = doc.toObject(User::class.java)!!

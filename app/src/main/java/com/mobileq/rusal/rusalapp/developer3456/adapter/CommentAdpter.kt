@@ -28,10 +28,10 @@ class CommentAdpter(private val mList: List<Comment>) : RecyclerView.Adapter<Com
 
         val itemsViewModel = mList[position]
         holder.textViewDec.setText(itemsViewModel.commentText)
-        holder.txtStudentName.setText(itemsViewModel.userSendName)
+//        holder.txtStudentName.setText(itemsViewModel.userSendName)
 
-        Picasso.get().load(itemsViewModel.userSendImage)
-            .into(holder.imageView)
+//        Picasso.get().load(itemsViewModel.userSendImage)
+//            .into(holder.imageView)
 
 
     }

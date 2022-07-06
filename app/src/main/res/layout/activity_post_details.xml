@@ -167,26 +167,25 @@
 
                 />
 
-            <EditText
-                android:id="@+id/input_comment"
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginEnd="@dimen/_12sdp"
-                android:layout_weight="2"
-                android:background="@drawable/comment_background"
-                android:hint="اكتب تعليقا"
-                android:padding="@dimen/_8sdp"
-
-
-                />
-
 
         </LinearLayout>
 
+    <EditText
+        android:id="@+id/input_comment"
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:background="@drawable/comment_background"
+        android:hint="اكتب تعليقا"
+        android:padding="@dimen/_8sdp"
+
+
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="698dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 
 
 <!--</ScrollView>-->

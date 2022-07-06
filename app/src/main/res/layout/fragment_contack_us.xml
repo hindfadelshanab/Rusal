@@ -104,10 +104,10 @@
             />
 
         <TextView
-            android:id="@+id/txt_whatsappNo"
+            android:id="@+id/txt_phoneNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0566020111"
+            android:text="0599328104"
             android:layout_marginStart="@dimen/_12sdp"
 
 
@@ -139,10 +139,10 @@
             />
 
         <TextView
-            android:id="@+id/txt_phoneNo"
+            android:id="@+id/txtWhatsappNo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+972566020111"
+            android:text="+970599328104"
             android:layout_marginStart="@dimen/_12sdp"
 
 

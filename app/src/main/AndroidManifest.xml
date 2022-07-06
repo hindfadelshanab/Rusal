@@ -4,6 +4,9 @@
     package="com.mobileq.rusal.rusalapp.developer3456">
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -19,14 +22,20 @@
         android:theme="@style/Theme.RusalApp"
         tools:targetApi="31">
         <activity
+            android:name=".ClubActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".PostDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".GuestActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name="p"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name="p" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".Frgmant.IndividualismChatActivity"
             android:exported="false"
@@ -35,8 +44,8 @@
         <!-- android:exported="false" /> -->
         <activity
             android:name=".ChatActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Frgmant.MakeChatActivity"
             android:exported="false" />

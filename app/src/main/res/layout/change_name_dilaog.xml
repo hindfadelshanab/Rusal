@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/_6sdp"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_12sdp"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/_12sdp"
+        >
+
+
+        <TextView
+            android:id="@+id/txt_new_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enter New Name"
+            android:textSize="@dimen/_16ssp"
+            android:fontFamily="@font/tajawal_regular"
+            android:layout_marginStart="@dimen/_16ssp"
+
+
+            />
+
+        <EditText
+            android:id="@+id/input_new_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16ssp"
+            android:layout_marginEnd="@dimen/_16ssp"
+
+            android:background="@color/white"
+            android:hint="new value"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:padding="@dimen/_4sdp"
+
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            >
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:layout_marginEnd="@dimen/_16ssp"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:fontFamily="@font/tajawal_regular"
+
+                />
+            <Button
+                android:id="@+id/btn_done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/mainColor"
+
+                android:layout_marginEnd="@dimen/_16ssp"
+                android:fontFamily="@font/tajawal_regular"
+                android:text="Done"
+                android:textColor="@color/white"
+
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>
